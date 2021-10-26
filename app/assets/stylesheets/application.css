@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+@import “bootstrap”;
+.center_div{
+    margin: 0 auto;
+    width:20%; /* value of your choice which suits your alignment */
+}
+.bg{
+  background-color:#a6c9e1;
+}
+.field_width{
+  width: 240px;
+}
+.section{
+  background-color: white;
+  margin: 0px 390px 1px 390px;
+  width: 60%;
+}
