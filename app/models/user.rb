@@ -5,19 +5,27 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
   validates :phone, :username, uniqueness: true
-  # only allow letter, number, underscore and punctuation.
   validates_format_of :phone, with: /^[0-9]{11}$/, :multiline => true
-  validates_format_of :password, with: /^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/, :multiline => true
+  validate :password_requirements_are_met
   validates_format_of :username, with: /^[-@.\/#&+\w\s]*$/, :multiline => true
-  #validates :email,  presence: true, if: -> { phone.blank? }
-  #validates :phone,  presence: true, if: -> { email.blank? }
 
   attr_writer :login
+
+  def password_requirements_are_met
+    rules = {
+      " must contain at least one uppercase letter"  => /[A-Z]+/,
+      " length must be greater than 8"               => /(?=.{8,})/,
+      " must contain at least one special character" => /[^A-Za-z0-9]+/
+    }
+
+    rules.each do |message, regex|
+      errors.add( :password, message ) unless password.match( regex )
+    end
+  end
 
   def login
     @login || self.phone || self.email
   end
-
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
