@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :city %>
-    <%= form.text_field :city %>
+    <%= form.select :city, Ad::CITIES %>
   </div>
 
   <div class="field">
@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :car_make %>
-    <%= form.text_field :car_make %>
+    <%= form.select :car_make, Ad::MAKE %>
   </div>
 
   <div class="field">
@@ -33,12 +33,12 @@
 
   <div class="field">
     <%= form.label :engine_type %>
-    <%= form.text_field :engine_type %>
+    <%= form.select :engine_type, Ad::ENGINE  %>
   </div>
 
   <div class="field">
     <%= form.label :transmission %>
-    <%= form.text_field :transmission %>
+    <%= form.select :transmission, Ad::TRANSMISSION %>
   </div>
 
   <div class="field">
@@ -48,12 +48,13 @@
 
   <div class="field">
     <%= form.label :color %>
+    <%= form.select :color, Ad::COLOR, include_blank: true %>
     <%= form.text_field :color %>
   </div>
 
   <div class="field">
     <%= form.label :assembly_type %>
-    <%= form.text_field :assembly_type %>
+    <%= form.select :assembly_type, Ad::ASSEMBLY %>
   </div>
 
   <div class="field">

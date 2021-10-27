@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates_format_of :phone, with: /^[0-9]{11}$/, :multiline => true
   validates_format_of :password, with: /^(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/, :multiline => true
   validates_format_of :username, with: /^[-@.\/#&+\w\s]*$/, :multiline => true
+  #validates :email,  presence: true, if: -> { phone.blank? }
+  #validates :phone,  presence: true, if: -> { email.blank? }
 
   attr_writer :login
 
