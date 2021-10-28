@@ -50,5 +50,11 @@
   <%= @ad.description %>
 </p>
 
+<div style= 'width: 400px'>
+  <strong>IMAGE:</strong>
+  <%= link_to image_tag(@ad.image, style: 'width: 100%'), ads_path %>
+  
+</div>
+
 <%= link_to 'Edit', edit_ad_path(@ad) %> |
 <%= link_to 'Back', ads_path %>
