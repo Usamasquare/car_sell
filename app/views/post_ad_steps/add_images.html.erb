@@ -1,0 +1,26 @@
+<%= form_for @ad, url: wizard_path do |form| %>
+  <% if @ad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ad.errors.count, "error") %> prohibited this ad from being saved:</h2>
+      <ul>
+        <% @ad.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= hidden_field_tag :ad_id, @ad.id %>
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+  <div class="actions">
+    <td><%= link_to 'Finalize', finalize_path %></td>
+  </div>
+<% end %>

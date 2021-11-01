@@ -23,28 +23,21 @@ class AdsController < ApplicationController
   def create
     @ad = Ad.new(ad_params)
 
-    respond_to do |format|
-      if @ad.save
-        format.html { redirect_to @ad, notice: "Ad was successfully created." }
-        format.json { render :show, status: :created, location: @ad }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
-      end
+    if @ad.save
+      redirect_to post_ad_steps_path(ad_id: @ad.id)
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /ads/1 or /ads/1.json
   def update
-    respond_to do |format|
-      if @ad.update(ad_params)
-        format.html { redirect_to @ad, notice: "Ad was successfully updated." }
-        format.json { render :show, status: :ok, location: @ad }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
-      end
-    end
+    #redirect_to edit_post_ad_step_path(ad_id: @ad.id), method: :patch
+    redirect_to :controller=>'post_ad_steps',:action=>'update', ad_id: @ad.id
+
+  end
+
+  def finalize
   end
 
   # DELETE /ads/1 or /ads/1.json
@@ -64,6 +57,6 @@ class AdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ad_params
-      params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :assembly_type, :description, :image)
+      params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :assembly_type, :description, images: [])
     end
 end
