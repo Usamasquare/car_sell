@@ -32,9 +32,7 @@ class AdsController < ApplicationController
 
   # PATCH/PUT /ads/1 or /ads/1.json
   def update
-    #redirect_to edit_post_ad_step_path(ad_id: @ad.id), method: :patch
-    redirect_to :controller=>'post_ad_steps',:action=>'update', ad_id: @ad.id
-
+    redirect_to controller: 'post_ad_steps', action: 'update', ad_id: @ad.id
   end
 
   def finalize

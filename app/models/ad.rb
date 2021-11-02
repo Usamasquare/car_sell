@@ -14,6 +14,7 @@ class Ad < ApplicationRecord
 
   def validate_images
     return if images.count <= 5
+
     errors.add(:images, 'limit is upto 5')
   end
 end

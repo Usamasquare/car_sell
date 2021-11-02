@@ -53,10 +53,9 @@
 <div style= 'width: 400px'>
   <strong>IMAGE:</strong>
   <% @ad.images.each do |i| %>
-    <%= link_to image_tag(i, style: 'width: 100%'), ads_path %>
+    <%= link_to image_tag(i, class: 'width-100'), ads_path %>
   <%end%>
 </div>
-
 
 <%= link_to 'Edit', edit_ad_path(@ad) %> |
 <%= link_to 'Back', ads_path %>

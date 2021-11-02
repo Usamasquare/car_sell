@@ -6,12 +6,12 @@ class User < ApplicationRecord
 
   validates :phone, :username, uniqueness: true
   validates_format_of :phone, with: /^[0-9]{11}$/, :multiline => true
-  validate :password_requirements_are_met
+  validate :password_validations
   validates_format_of :username, with: /^[-@.\/#&+\w\s]*$/, :multiline => true
 
   attr_writer :login
 
-  def password_requirements_are_met
+  def password_validations
     rules = {
       " must contain at least one uppercase letter"  => /[A-Z]+/,
       " length must be greater than 8"               => /(?=.{8,})/,
