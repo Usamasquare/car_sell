@@ -50,7 +50,7 @@
   <%= @ad.description %>
 </p>
 
-<div style= 'width: 400px'>
+<div class= 'width-400'>
   <strong>IMAGE:</strong>
   <% @ad.images.each do |i| %>
     <%= link_to image_tag(i, class: 'width-100'), ads_path %>

@@ -22,7 +22,6 @@ class AdsController < ApplicationController
   # POST /ads or /ads.json
   def create
     @ad = Ad.new(ad_params)
-
     if @ad.save
       redirect_to post_ad_steps_path(ad_id: @ad.id)
     else
@@ -32,10 +31,15 @@ class AdsController < ApplicationController
 
   # PATCH/PUT /ads/1 or /ads/1.json
   def update
-    redirect_to controller: 'post_ad_steps', action: 'update', ad_id: @ad.id
-  end
-
-  def finalize
+    respond_to do |format|
+      if @ad.update(ad_params)
+        format.html { redirect_to @ad, notice: "Ad was successfully updated." }
+        format.json { render :show, status: :ok, location: @ad }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @ad.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /ads/1 or /ads/1.json

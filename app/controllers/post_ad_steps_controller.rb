@@ -18,6 +18,6 @@ class PostAdStepsController < ApplicationController
   private
 
     def redirect_to_finish_wizard
-      redirect_to root_url, notice: "Your ad is posted."
+      redirect_to root_url, notice: 'Your ad is posted.'
     end
 end

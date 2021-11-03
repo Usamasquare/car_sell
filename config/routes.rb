@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
+  root to: 'ads#index'
+  devise_for :users
   resources :ads
   resources :post_ad_steps
-  devise_for :users
   get 'finalize',to: 'ads#finalize'
-
-  root to: 'ads#index'
+  get 'checkout',to: 'checkouts#show'
 end

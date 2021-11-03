@@ -1,3 +1,4 @@
+<h1>Add Images</h1>
 <%= form_for @ad, url: wizard_path do |form| %>
   <% if @ad.errors.any? %>
     <div id="error_explanation">
@@ -21,6 +22,6 @@
   </div>
 
   <div class="actions">
-    <td><%= link_to 'Finalize', finalize_path %></td>
+    <td><%= link_to 'Finalize', checkout_path %></td>
   </div>
 <% end %>
