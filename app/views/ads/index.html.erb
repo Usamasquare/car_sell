@@ -2,44 +2,45 @@
 
 <h1>Ads</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>City</th>
-      <th>Mileage</th>
-      <th>Car make</th>
-      <th>Price</th>
-      <th>Engine type</th>
-      <th>Transmission</th>
-      <th>Engine capacity</th>
-      <th>Color</th>
-      <th>Assembly type</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @ads.each do |ad| %>
+<div>
+  <table>
+    <thead>
       <tr>
-        <td><%= ad.city %></td>
-        <td><%= ad.mileage %></td>
-        <td><%= ad.car_make %></td>
-        <td><%= ad.price %></td>
-        <td><%= ad.engine_type %></td>
-        <td><%= ad.transmission %></td>
-        <td><%= ad.engine_capacity %></td>
-        <td><%= ad.color %></td>
-        <td><%= ad.assembly_type %></td>
-        <td><%= ad.description %></td>
-        <td><%= link_to 'Show', ad %></td>
-        <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-        <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>City</th>
+        <th>Mileage</th>
+        <th>Car make</th>
+        <th>Price</th>
+        <th>Engine type</th>
+        <th>Transmission</th>
+        <th>Engine capacity</th>
+        <th>Color</th>
+        <th>Assembly type</th>
+        <th>Description</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @ads.each do |ad| %>
+        <tr>
+          <td><%= ad.city %></td>
+          <td><%= ad.mileage %></td>
+          <td><%= ad.car_make %></td>
+          <td><%= ad.price %></td>
+          <td><%= ad.engine_type %></td>
+          <td><%= ad.transmission %></td>
+          <td><%= ad.engine_capacity %></td>
+          <td><%= ad.color %></td>
+          <td><%= ad.assembly_type %></td>
+          <td><%= ad.description %></td>
+          <td><%= link_to 'Show', ad %></td>
+          <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
+          <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
 
 <%= link_to 'New Ad', new_ad_path %>

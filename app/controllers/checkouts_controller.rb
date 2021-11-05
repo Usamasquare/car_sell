@@ -17,12 +17,10 @@ class CheckoutsController < ApplicationController
     @ad_id = Stripe::Checkout::Session.retrieve(params[:session_id]).metadata.ad_id
     @ad = set_ad(@ad_id)
     @ad.update(featured: true)
-    puts "#{@ad_id}"
   end
 
   private
   def set_ad(ad_id)
     @ad = current_user.ads.find(ad_id)
   end
-
 end

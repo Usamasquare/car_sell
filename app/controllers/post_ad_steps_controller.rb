@@ -1,23 +1,29 @@
 class PostAdStepsController < ApplicationController
   include Wicked::Wizard
-  steps :add_images
+  steps :add_images, :finalize
 
   def show
-    @ad = current_user.ads.find(params[:ad_id])
+    case step
+      when :add_images
+        @ad = current_user.ads.find(params[:ad_id])
+      when :finalize
+        @ad = current_user.ads.find(params[:ad])
+      end
+    #@ad = current_user.ads.find(params[:ad_id])
     render_wizard
   end
 
   def update
     @ad = current_user.ads.find(params[:ad_id])
-    if ((params[:ad]).present?)
-      @ad.images.attach(params[:ad][:images])
-    end
-    render_wizard
+    case step
+      when :add_images
+        if ((params[:ad]).present?)
+          @ad.images.attach(params[:ad][:images])
+        end
+      when :finalize
+        @ad.update(secondary_contact:, params[:secondary_contact])
+      end
+    render_wizard(@ad,{},ad: @ad)
   end
 
-  private
-
-    def redirect_to_finish_wizard
-      redirect_to root_url, notice: 'Your ad is posted.'
-    end
 end
