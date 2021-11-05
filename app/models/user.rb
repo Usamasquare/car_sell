@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   include Pay::Billable
   pay_customer
+  has_many :ads
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -10,6 +11,7 @@ class User < ApplicationRecord
   validates_format_of :phone, with: /^[0-9]{11}$/, :multiline => true
   validate :password_validations
   validates_format_of :username, with: /^[-@.\/#&+\w\s]*$/, :multiline => true
+
 
   attr_writer :login
 

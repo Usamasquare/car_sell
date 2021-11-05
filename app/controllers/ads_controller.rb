@@ -22,6 +22,7 @@ class AdsController < ApplicationController
   # POST /ads or /ads.json
   def create
     @ad = Ad.new(ad_params)
+    @ad.user = current_user
     if @ad.save
       redirect_to post_ad_steps_path(ad_id: @ad.id)
     else
@@ -42,6 +43,10 @@ class AdsController < ApplicationController
     end
   end
 
+  def my_posts
+    @my_ads = current_user.ads.where(user_id: current_user.id)
+  end
+
   # DELETE /ads/1 or /ads/1.json
   def destroy
     @ad.destroy
@@ -54,7 +59,7 @@ class AdsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ad
-      @ad = Ad.find(params[:id])
+      @ad = current_user.ads.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -3,12 +3,12 @@ class PostAdStepsController < ApplicationController
   steps :add_images
 
   def show
-    @ad = Ad.find(params[:ad_id])
+    @ad = current_user.ads.find(params[:ad_id])
     render_wizard
   end
 
   def update
-    @ad = Ad.find(params[:ad_id])
+    @ad = current_user.ads.find(params[:ad_id])
     if ((params[:ad]).present?)
       @ad.images.attach(params[:ad][:images])
     end
