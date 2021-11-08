@@ -21,7 +21,7 @@ class PostAdStepsController < ApplicationController
           @ad.images.attach(params[:ad][:images])
         end
       when :finalize
-        @ad.update(secondary_contact:, params[:secondary_contact])
+        @ad.update(secondary_contact: params[:ad][:secondary_contact])
       end
     render_wizard(@ad,{},ad: @ad)
   end
