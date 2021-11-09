@@ -2,7 +2,17 @@ class AdsController < ApplicationController
   before_action :set_ad, only: %i[ show edit update destroy ]
 
   def index
-    @ads = Ad.all
+    @pagy, @ads = pagy(Ad.all, items: 3)
+    @ads = @ads.all.global_search(params[:city])if(params[:city].present?)
+    @ads = @ads.all.global_search(params[:color])if(params[:color].present?)
+    @ads = @ads.all.global_search(params[:mileage])if(params[:mileage].present?)
+    @ads = @ads.all.global_search(params[:car_make])if(params[:car_make].present?)
+    @ads = @ads.all.global_search(params[:price])if(params[:price].present?)
+    @ads = @ads.all.global_search(params[:engine_capacity])if(params[:engine_capacity].present?)
+    @ads = @ads.all.global_search(paras[:engine_type])if(params[:engine_type].present?)
+    @ads = @ads.all.global_search(params[:assembly_type])if(params[:assembly_type].present?)
+    @ads = @ads.all.global_search(params[:transmission])if(params[:transmission].present?)
+
   end
 
   def show

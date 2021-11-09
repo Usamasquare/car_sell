@@ -30,7 +30,8 @@ gem 'devise'
 gem 'bootstrap', '~> 4.0.0'
 gem 'wicked'
 gem 'pay', '~> 3.0'
-
+gem 'pg_search'
+gem 'pagy', '~> 5.1'
 # To use Stripe, also include:
 gem 'stripe', '>= 2.8', '< 6.0'
 

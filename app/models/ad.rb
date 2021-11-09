@@ -1,7 +1,10 @@
 class Ad < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type]
   has_many_attached :images
   has_rich_text :description
   belongs_to :user
+
 
   CITIES = ['Rawalpindi', 'Lahore', 'Quetta', 'Karachi', 'Peshawar', 'Islamabad' ]
   MAKE = ['Suzuki', 'Toyota', 'Honda', 'BMW' ]
@@ -9,6 +12,7 @@ class Ad < ApplicationRecord
   TRANSMISSION = ['Automatic Manual', 'Manual' ]
   ASSEMBLY = ['Local', 'Imported']
   COLOR = ['Black' ,'White']
+  PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
 
   validate :validate_images
   validates :city, inclusion: { in: CITIES, message: "%{value} is invalid" }
@@ -17,7 +21,7 @@ class Ad < ApplicationRecord
   validates :engine_type, inclusion: { in: ENGINE, message: "%{value} is invalid" }
   validates :color, presence: true
   validates :assembly_type, inclusion: { in:  ASSEMBLY, message: "%{value} is invalid" }
-  validates :secondary_contact, format: {with: PK_PHONE_REGEX, message: "format should be +92-3XX-XXXXXXX", multiline: true}
+  validates :secondary_contact, format: {with: PK_PHONE_REGEX, message: "format should be +92-3XX-XXXXXXX", multiline: true}, allow_blank: true
   validates :mileage, numericality: true,  presence: true
   validates :price, numericality: true, presence: true
   validates :engine_capacity, numericality: true, presence: true

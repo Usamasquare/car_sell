@@ -30,10 +30,12 @@
         <% end %>
 
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <%= form_with(url: ads_path, method: :get) do |f|%>
+        <div class="d-flex ">
+          <div class="style-me"><%= f.text_field :search, class:"form-control rounded" %></div>
+          <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
+        </div>
+      <% end %>
     </div>
   </div>
 </nav>
