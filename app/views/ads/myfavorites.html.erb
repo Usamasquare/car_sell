@@ -1,6 +1,5 @@
-<p id="notice"><%= notice %></p>
 
-<h1>My Ads</h1>
+<h1>My Favorite Ads</h1>
 
 <div>
   <table>
@@ -21,7 +20,7 @@
     </thead>
 
     <tbody>
-      <% @my_ads.each do |ad| %>
+      <% @ads.each do |ad| %>
         <tr>
           <td><%= ad.city %></td>
           <td><%= ad.mileage %></td>
@@ -33,6 +32,7 @@
           <td><%= ad.color %></td>
           <td><%= ad.assembly_type %></td>
           <td><%= ad.description %></td>
+          <td><%= link_to 'Favorite', favorites_ad_path(ad) %></td>
           <td><%= link_to 'Show', ad %></td>
           <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
           <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -42,5 +42,5 @@
   </table>
 </div>
 
+
 <%= link_to 'New Ad', new_ad_path %>
-<%== pagy_nav(@pagy) %>

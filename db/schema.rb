@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_08_084644) do
+ActiveRecord::Schema.define(version: 2021_11_09_095409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,13 @@ ActiveRecord::Schema.define(version: 2021_11_08_084644) do
     t.boolean "featured", default: false
     t.string "secondary_contact"
     t.index ["user_id"], name: "index_ads_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "ad_id", null: false
+    t.index ["ad_id"], name: "index_favorites_on_ad_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "pay_charges", force: :cascade do |t|
@@ -178,6 +185,8 @@ ActiveRecord::Schema.define(version: 2021_11_08_084644) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ads", "users"
+  add_foreign_key "favorites", "ads"
+  add_foreign_key "favorites", "users"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"

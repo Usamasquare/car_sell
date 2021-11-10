@@ -1,10 +1,13 @@
 class Ad < ApplicationRecord
   include PgSearch::Model
-  pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type]
+
   has_many_attached :images
+  has_many :favorites
+  has_many :users, through: :favorites
   has_rich_text :description
   belongs_to :user
 
+  pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type]
 
   CITIES = ['Rawalpindi', 'Lahore', 'Quetta', 'Karachi', 'Peshawar', 'Islamabad' ]
   MAKE = ['Suzuki', 'Toyota', 'Honda', 'BMW' ]

@@ -12,7 +12,6 @@ class AdsController < ApplicationController
     @ads = @ads.all.global_search(paras[:engine_type])if(params[:engine_type].present?)
     @ads = @ads.all.global_search(params[:assembly_type])if(params[:assembly_type].present?)
     @ads = @ads.all.global_search(params[:transmission])if(params[:transmission].present?)
-
   end
 
   def show
@@ -23,6 +22,21 @@ class AdsController < ApplicationController
   end
 
   def edit
+  end
+
+  def favorites
+    f = Favorite.new()
+    f.user_id = current_user.id
+    f.ad_id = params[:id]
+    f.save
+    redirect_to ads_path
+  end
+
+  def myfavorites
+    @ads = Array.new()
+    current_user.favorites.each do |fav|
+      @ads << fav.ad
+    end
   end
 
   def create
@@ -48,7 +62,7 @@ class AdsController < ApplicationController
   end
 
   def my_posts
-    @my_ads = current_user.ads.where(user_id: current_user.id)
+    @pagy, @my_ads = pagy(current_user.ads.where(user_id: current_user.id), items: 3)
   end
 
   def destroy
