@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CarSell</title>
+    <title><%= content_for?(:title) ? yield(:title) : "CarSell" %></title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,7 +13,11 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
-    <%= yield %>
+    <header>
+      <%= render 'layouts/header' %>
+    </header>
+    <main role="main">
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </main>
   </body>
 </html>

@@ -9,7 +9,7 @@ class AdsController < ApplicationController
     @ads = @ads.all.global_search(params[:car_make])if(params[:car_make].present?)
     @ads = @ads.all.global_search(params[:price])if(params[:price].present?)
     @ads = @ads.all.global_search(params[:engine_capacity])if(params[:engine_capacity].present?)
-    @ads = @ads.all.global_search(paras[:engine_type])if(params[:engine_type].present?)
+    @ads = @ads.all.global_search(params[:engine_type])if(params[:engine_type].present?)
     @ads = @ads.all.global_search(params[:assembly_type])if(params[:assembly_type].present?)
     @ads = @ads.all.global_search(params[:transmission])if(params[:transmission].present?)
   end
@@ -25,11 +25,15 @@ class AdsController < ApplicationController
   end
 
   def favorites
-    f = Favorite.new()
-    f.user_id = current_user.id
-    f.ad_id = params[:id]
-    f.save
-    redirect_to ads_path
+    if user_signed_in?
+      f = Favorite.new()
+      f.user_id = current_user.id
+      f.ad_id = params[:id]
+      f.save
+      redirect_to ads_path
+    else
+      redirect_to new_user_registration_path
+    end
   end
 
   def myfavorites
@@ -37,11 +41,13 @@ class AdsController < ApplicationController
     current_user.favorites.each do |fav|
       @ads << fav.ad
     end
+    @pagy = pagy(current_user.favorites, items: 3)
   end
 
   def create
     @ad = Ad.new(ad_params)
     @ad.user = current_user
+    current_user.ads << @ad
     if @ad.save
       redirect_to post_ad_steps_path(ad_id: @ad.id)
     else
@@ -74,8 +80,11 @@ class AdsController < ApplicationController
   end
 
   private
+
   def set_ad
-    @ad = current_user.ads.find(params[:id])
+    #if(current_user.id = Ad.find(params[:id])
+      @ad = current_user.ads.find(params[:id])
+    #end
   end
 
   def ad_params

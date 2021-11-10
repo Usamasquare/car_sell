@@ -3,7 +3,7 @@
 <h1>My Ads</h1>
 
 <div>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>City</th>
@@ -42,5 +42,7 @@
   </table>
 </div>
 
-<%= link_to 'New Ad', new_ad_path %>
-<%== pagy_nav(@pagy) %>
+<button type="button" class="btn btn-dark"><%= link_to 'New Ad', new_ad_path %></button>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-primary"><%== pagy_nav(@pagy) %></button>
+</div>

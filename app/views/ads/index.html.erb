@@ -1,60 +1,69 @@
 <p id="notice"><%= notice %></p>
 
 <%= form_with(url: ads_path, method: :get) do |f|%>
-  <div class="d-flex ">
-  <div class="field">
-    <%= f.label :city %>
-    <%= f.select :city, Ad::CITIES, include_blank: true  %>
-  </div>
+  <div class="row g-3">
+    <div class="col">
+        <div class="field">
+          <%= f.label :city %>
+          <%= f.select :city, Ad::CITIES, include_blank: true  %>
+        </div>
 
-  <div class="style-me">
-    <%= f.label :color %>
-    <%= f.select :color, Ad::COLOR, include_blank: true  %>
-  </div>
+        <div class="field">
+          <%= f.label :color %>
+          <%= f.select :color, Ad::COLOR, include_blank: true  %>
+        </div>
 
-  <div class="field">
-    <%= f.label :mileage %>
-    <%= f.number_field :mileage, include_blank: true %>
-  </div>
+        <div class="field">
+          <%= f.label :assembly_type %>
+          <%= f.select :assembly_type, Ad::ASSEMBLY, include_blank: true  %>
+        </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :car_make %>
-    <%= f.select :car_make, Ad::MAKE, include_blank: true  %>
-  </div>
+    <div class="col">
+      <div class="field">
+        <%= f.label :mileage %>
+        <%= f.number_field :mileage, include_blank: true %>
+      </div>
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price, include_blank: true  %>
-  </div>
+      <div class="field">
+        <%= f.label :car_make %>
+        <%= f.select :car_make, Ad::MAKE, include_blank: true  %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :engine_type %>
-    <%= f.select :engine_type, Ad::ENGINE, include_blank: true   %>
-  </div>
+    <div class="col">
+      <div class="field">
+        <%= f.label :price %>
+        <%= f.text_field :price, include_blank: true  %>
+      </div>
 
-  <div class="field">
-    <%= f.label :transmission %>
-    <%= f.select :transmission, Ad::TRANSMISSION, include_blank: true  %>
-  </div>
+      <div class="field">
+        <%= f.label :engine_type %>
+        <%= f.select :engine_type, Ad::ENGINE, include_blank: true   %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="field">
+        <%= f.label :transmission %>
+        <%= f.select :transmission, Ad::TRANSMISSION, include_blank: true  %>
+      </div>
 
-  <div class="field">
-    <%= f.label :engine_capacity %>
-    <%= f.number_field :engine_capacity, include_blank: true  %>
-  </div>
+      <div class="field">
+        <%= f.label :engine_capacity %>
+        <%= f.number_field :engine_capacity, include_blank: true  %>
+      </div>
 
-  <div class="field">
-    <%= f.label :assembly_type %>
-    <%= f.select :assembly_type, Ad::ASSEMBLY, include_blank: true  %>
+      <div class="style-me"><%#= f.text_field :search, class:"form-control rounded" %></div>
+        <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
+      </div>
+    <% end %>
   </div>
-    <div class="style-me"><%#= f.text_field :search, class:"form-control rounded" %></div>
-    <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
-  </div>
-<% end %>
+</div>
 
 <h1>Ads</h1>
 
 <div>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>City</th>
@@ -86,8 +95,6 @@
           <td><%= ad.description %></td>
           <td><%= link_to 'Favorite', favorites_ad_path(ad) %></td>
           <td><%= link_to 'Show', ad %></td>
-          <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-          <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -95,5 +102,7 @@
 </div>
 
 
-<%= link_to 'New Ad', new_ad_path %>
-<%== pagy_nav(@pagy) %>
+<button type="button" class="btn btn-dark"><%= link_to 'New Ad', new_ad_path %></button>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-primary"><%== pagy_nav(@pagy) %></button>
+</div>

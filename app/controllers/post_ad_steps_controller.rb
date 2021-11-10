@@ -9,7 +9,6 @@ class PostAdStepsController < ApplicationController
       when :finalize
         @ad = current_user.ads.find(params[:ad])
       end
-    #@ad = current_user.ads.find(params[:ad_id])
     render_wizard
   end
 

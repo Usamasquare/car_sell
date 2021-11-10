@@ -18,10 +18,10 @@
             <%= link_to 'Edit Profile', edit_user_registration_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Sign Out', destroy_user_session_path, method: 'delete', class: 'nav-link' %>
+            <%= link_to 'Favorites', myfavorites_ads_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Favorites', myfavorites_ads_path, class: 'nav-link' %>
+            <%= link_to 'Sign Out', destroy_user_session_path, method: 'delete', class: 'nav-link' %>
           </li>
         <% else %>
           <li class="nav-item">
@@ -33,12 +33,6 @@
         <% end %>
 
       </ul>
-      <%= form_with(url: ads_path, method: :get) do |f|%>
-        <div class="d-flex ">
-          <div class="style-me"><%= f.text_field :search, class:"form-control rounded" %></div>
-          <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
-        </div>
-      <% end %>
     </div>
   </div>
 </nav>

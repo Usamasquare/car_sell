@@ -1,61 +1,77 @@
 <p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="text-center mt-4">
+    <h2>Display Ad</h2>
+  </div>
+    <div class="card mt-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-4">
+            <p>
+              <strong>City:</strong>
+              <%= @ad.city %>
+            </p>
 
-<p>
-  <strong>City:</strong>
-  <%= @ad.city %>
-</p>
+            <p>
+              <strong>Mileage:</strong>
+              <%= @ad.mileage %>
+            </p>
 
-<p>
-  <strong>Mileage:</strong>
-  <%= @ad.mileage %>
-</p>
+            <p>
+              <strong>Car make:</strong>
+              <%= @ad.car_make %>
+            </p>
 
-<p>
-  <strong>Car make:</strong>
-  <%= @ad.car_make %>
-</p>
+            <p>
+              <strong>Price:</strong>
+              <%= @ad.price %>
+            </p>
 
-<p>
-  <strong>Price:</strong>
-  <%= @ad.price %>
-</p>
+            <p>
+              <strong>Description:</strong>
+              <%= @ad.description %>
+            </p>
+          </div>
 
-<p>
-  <strong>Engine type:</strong>
-  <%= @ad.engine_type %>
-</p>
+          <div class="col-4">
+            <p>
+              <strong>Engine type:</strong>
+              <%= @ad.engine_type %>
+            </p>
 
-<p>
-  <strong>Transmission:</strong>
-  <%= @ad.transmission %>
-</p>
+            <p>
+              <strong>Transmission:</strong>
+              <%= @ad.transmission %>
+            </p>
 
-<p>
-  <strong>Engine capacity:</strong>
-  <%= @ad.engine_capacity %>
-</p>
+            <p>
+              <strong>Engine capacity:</strong>
+              <%= @ad.engine_capacity %>
+            </p>
 
-<p>
-  <strong>Color:</strong>
-  <%= @ad.color %>
-</p>
+            <p>
+              <strong>Color:</strong>
+              <%= @ad.color %>
+            </p>
 
-<p>
-  <strong>Assembly type:</strong>
-  <%= @ad.assembly_type %>
-</p>
+            <p>
+              <strong>Assembly type:</strong>
+              <%= @ad.assembly_type %>
+            </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @ad.description %>
-</p>
+          </div>
 
-<div class= 'width-400'>
-  <strong>IMAGE:</strong>
-  <% @ad.images.each do |i| %>
-    <%= link_to image_tag(i, class: 'width-100'), ads_path %>
-  <%end%>
+          <div class="col-4">
+            <div class= 'width-400'>
+              <strong>IMAGE:</strong>
+              <% @ad.images.each do |i| %>
+                <%= link_to image_tag(i, class: 'width-100'), ads_path %>
+              <%end%>
+            </div>
+          </div>
+
+        </div>
+      <%= link_to 'Edit', edit_ad_path(@ad) %> |
+      <%= link_to 'Back', ads_path %>
+  </div>
 </div>
-
-<%= link_to 'Edit', edit_ad_path(@ad) %> |
-<%= link_to 'Back', ads_path %>

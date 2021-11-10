@@ -7,12 +7,12 @@ class Ad < ApplicationRecord
   has_rich_text :description
   belongs_to :user
 
-  pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type]
+  pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type, :mileage, :price, :engine_capacity]
 
   CITIES = ['Rawalpindi', 'Lahore', 'Quetta', 'Karachi', 'Peshawar', 'Islamabad' ]
   MAKE = ['Suzuki', 'Toyota', 'Honda', 'BMW' ]
   ENGINE = ['Petrol', 'Diesel', 'Hybrid' ]
-  TRANSMISSION = ['Automatic Manual', 'Manual' ]
+  TRANSMISSION = ['Automatic', 'Manual' ]
   ASSEMBLY = ['Local', 'Imported']
   COLOR = ['Black' ,'White']
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/

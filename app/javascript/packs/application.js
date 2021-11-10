@@ -7,6 +7,7 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import $ from 'jquery'
 
 Rails.start()
 Turbolinks.start()
@@ -14,3 +15,10 @@ ActiveStorage.start()
 
 require("trix")
 require("@rails/actiontext")
+
+
+$(document).ready(function () {
+  $('.try').on('click', function () {
+    $("").removeClass("invisible").addClass("visible");
+  });
+})

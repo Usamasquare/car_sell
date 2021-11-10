@@ -2,7 +2,7 @@
 <h1>My Favorite Ads</h1>
 
 <div>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>City</th>
@@ -32,15 +32,10 @@
           <td><%= ad.color %></td>
           <td><%= ad.assembly_type %></td>
           <td><%= ad.description %></td>
-          <td><%= link_to 'Favorite', favorites_ad_path(ad) %></td>
           <td><%= link_to 'Show', ad %></td>
-          <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-          <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 
-
-<%= link_to 'New Ad', new_ad_path %>
