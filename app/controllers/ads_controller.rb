@@ -1,5 +1,6 @@
 class AdsController < ApplicationController
-  before_action :set_ad, only: %i[ show edit update destroy ]
+  before_action :set_ad, only: %i[ edit update destroy ]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @pagy, @ads = pagy(Ad.all, items: 3)
@@ -12,9 +13,14 @@ class AdsController < ApplicationController
     @ads = @ads.all.global_search(params[:engine_type])if(params[:engine_type].present?)
     @ads = @ads.all.global_search(params[:assembly_type])if(params[:assembly_type].present?)
     @ads = @ads.all.global_search(params[:transmission])if(params[:transmission].present?)
+    @colors = Array.new()
+    Ad.select('color').distinct.each do |c|
+      @colors << c.color
+    end
   end
 
   def show
+    @ad = Ad.find(params[:id])
   end
 
   def new
@@ -41,7 +47,7 @@ class AdsController < ApplicationController
     current_user.favorites.each do |fav|
       @ads << fav.ad
     end
-    @pagy = pagy(current_user.favorites, items: 3)
+    @pagy, @ads = pagy_array(@ads, items: 3)
   end
 
   def create
@@ -81,10 +87,12 @@ class AdsController < ApplicationController
 
   private
 
+  def record_not_found
+    render plain: "404 Not Found", status: 404
+  end
+
   def set_ad
-    #if(current_user.id = Ad.find(params[:id])
-      @ad = current_user.ads.find(params[:id])
-    #end
+    @ad = current_user.ads.find(params[:id])
   end
 
   def ad_params

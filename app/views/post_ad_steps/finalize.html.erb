@@ -18,10 +18,11 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <td><%= link_to 'Get Featured', checkout_path(@ad) %></td>
   </div>
 
   <div class="actions">
-    <td><%= link_to 'Finalize', checkout_path(@ad) %></td>
+    <%= form.submit %>
   </div>
+
 <% end %>
