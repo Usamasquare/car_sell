@@ -3,46 +3,51 @@
 <%= form_with(url: ads_path, method: :get) do |f|%>
   <div class="row g-3">
     <div class="col">
-        <div class="field">
-          <%= f.label :city %>
-          <%= f.select :city, Ad::CITIES, include_blank: true  %>
-        </div>
-
-        <div class="field">
-          <%= f.label :color %>
-          <%= f.select :color, @colors, include_blank: true  %>
-        </div>
-
-        <div class="field">
-          <%= f.label :assembly_type %>
-          <%= f.select :assembly_type, Ad::ASSEMBLY, include_blank: true  %>
-        </div>
-    </div>
-
-    <div class="col">
-      <div class="field">
-        <%= f.label :mileage %>
-        <%= f.number_field :mileage, include_blank: true %>
+      <div class="field ">
+        <%= f.label :city %>
+        <%= f.select :city, Ad::CITIES, include_blank: true  %>
       </div>
 
       <div class="field">
         <%= f.label :car_make %>
         <%= f.select :car_make, Ad::MAKE, include_blank: true  %>
       </div>
-    </div>
 
-    <div class="col">
       <div class="field">
         <%= f.label :price %>
         <%= f.text_field :price, include_blank: true  %>
       </div>
 
+    </div>
+
+    <div class="col test d-none">
+      <div class="field">
+        <%= f.label :mileage %>
+        <%= f.number_field :mileage, include_blank: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label :color %>
+        <%= f.select :color, @colors, include_blank: true  %>
+      </div>
+
+    </div>
+
+    <div class="col test d-none">
+
       <div class="field">
         <%= f.label :engine_type %>
         <%= f.select :engine_type, Ad::ENGINE, include_blank: true   %>
       </div>
+
+      <div class="field">
+        <%= f.label :assembly_type %>
+        <%= f.select :assembly_type, Ad::ASSEMBLY, include_blank: true  %>
+      </div>
+
     </div>
-    <div class="col">
+
+    <div class="col test d-none">
       <div class="field">
         <%= f.label :transmission %>
         <%= f.select :transmission, Ad::TRANSMISSION, include_blank: true  %>
@@ -53,12 +58,17 @@
         <%= f.number_field :engine_capacity, include_blank: true  %>
       </div>
 
-      <div class="style-me"><%#= f.text_field :search, class:"form-control rounded" %></div>
-        <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
-      </div>
-    <% end %>
+    </div>
+
+    <div class="show">Advanced Options</div>
+
+    <div class="style-me"></div>
+    <div><%= f.submit "Search", name:nil, class: "btn btn-outline-primary"%></div>
+
+    </div>
   </div>
-</div>
+<% end %>
+
 
 <h1>Ads</h1>
 
@@ -66,6 +76,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Image</th>
         <th>City</th>
         <th>Mileage</th>
         <th>Car make</th>
@@ -83,6 +94,13 @@
     <tbody>
       <% @ads.each do |ad| %>
         <tr>
+          <td>
+            <div class= 'width-100'>
+              <% if ad.images.any? %>
+                <%= link_to image_tag(ad.images.first, class: 'width-100'), ads_path %>
+                <% end %>
+            </div>
+          </td>
           <td><%= ad.city %></td>
           <td><%= ad.mileage %></td>
           <td><%= ad.car_make %></td>
@@ -93,16 +111,18 @@
           <td><%= ad.color %></td>
           <td><%= ad.assembly_type %></td>
           <td><%= ad.description %></td>
-          <td><%= link_to 'Favorite', favorites_ad_path(ad) %></td>
-          <td><%= link_to 'Show', ad %></td>
+          <td><%= link_to 'Favorite', favorites_ad_path(ad), class:"btn btn-danger" %></td>
+          <td><%= link_to 'Show', ad, class:"btn btn-info" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 
+<div>
+  <%= link_to 'New Ad', new_ad_path,class: "btn btn-dark"  %>
+</div>
 
-<button type="button" class="btn btn-dark"><%= link_to 'New Ad', new_ad_path %></button>
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-primary"><%== pagy_nav(@pagy) %></button>
+<div>
+  <%== pagy_bootstrap_combo_nav_js(@pagy) %>
 </div>

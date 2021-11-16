@@ -1,22 +1,12 @@
 class AdsController < ApplicationController
-  before_action :set_ad, only: %i[ edit update destroy ]
+  include Search
+  before_action :set_ad, only: %i[ close edit update destroy ]
+  before_action :filter, only: [ :index ]
+  before_action :authenticate, only: [ :favorites ]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @pagy, @ads = pagy(Ad.all, items: 3)
-    @ads = @ads.all.global_search(params[:city])if(params[:city].present?)
-    @ads = @ads.all.global_search(params[:color])if(params[:color].present?)
-    @ads = @ads.all.global_search(params[:mileage])if(params[:mileage].present?)
-    @ads = @ads.all.global_search(params[:car_make])if(params[:car_make].present?)
-    @ads = @ads.all.global_search(params[:price])if(params[:price].present?)
-    @ads = @ads.all.global_search(params[:engine_capacity])if(params[:engine_capacity].present?)
-    @ads = @ads.all.global_search(params[:engine_type])if(params[:engine_type].present?)
-    @ads = @ads.all.global_search(params[:assembly_type])if(params[:assembly_type].present?)
-    @ads = @ads.all.global_search(params[:transmission])if(params[:transmission].present?)
-    @colors = Array.new()
-    Ad.select('color').distinct.each do |c|
-      @colors << c.color
-    end
+    @colors = Ad.pluck(:color).reject(&:blank?).uniq
   end
 
   def show
@@ -31,29 +21,18 @@ class AdsController < ApplicationController
   end
 
   def favorites
-    if user_signed_in?
-      f = Favorite.new()
-      f.user_id = current_user.id
-      f.ad_id = params[:id]
-      f.save
-      redirect_to ads_path
-    else
-      redirect_to new_user_registration_path
-    end
+    @ad = Ad.find(params[:id])
+    current_user.favorite_ads << @ad if current_user.favorite_ad_ids.exclude?(@ad.id)
+    redirect_to ads_path
   end
 
   def myfavorites
-    @ads = Array.new()
-    current_user.favorites.each do |fav|
-      @ads << fav.ad
-    end
-    @pagy, @ads = pagy_array(@ads, items: 3)
+    @ads = current_user.favorite_ads
+    @pagy, @ads = pagy(@ads, items: 6)
   end
 
   def create
-    @ad = Ad.new(ad_params)
-    @ad.user = current_user
-    current_user.ads << @ad
+    @ad = current_user.ads.new(ad_params)
     if @ad.save
       redirect_to post_ad_steps_path(ad_id: @ad.id)
     else
@@ -64,7 +43,7 @@ class AdsController < ApplicationController
   def update
     respond_to do |format|
       if @ad.update(ad_params)
-        format.html { redirect_to @ad, notice: "Ad was successfully updated." }
+        format.html { redirect_to post_ad_steps_path(ad_id: @ad.id), notice: "Ad was successfully updated." }
         format.json { render :show, status: :ok, location: @ad }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -73,14 +52,19 @@ class AdsController < ApplicationController
     end
   end
 
+  def close
+    @ad.update(status: "closed")
+    redirect_to ad_path(@ad)
+  end
+
   def my_posts
-    @pagy, @my_ads = pagy(current_user.ads.where(user_id: current_user.id), items: 3)
+    @pagy, @my_ads = pagy(current_user.ads, items: 3)
   end
 
   def destroy
     @ad.destroy
     respond_to do |format|
-      format.html { redirect_to ads_url, notice: "Ad was successfully destroyed." }
+      format.html { redirect_to my_posts_url, notice: "Ad was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -89,6 +73,10 @@ class AdsController < ApplicationController
 
   def record_not_found
     render plain: "404 Not Found", status: 404
+  end
+
+  def authenticate
+      redirect_to new_user_registration_path unless user_signed_in?
   end
 
   def set_ad

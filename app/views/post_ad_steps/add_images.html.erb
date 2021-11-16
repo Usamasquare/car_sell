@@ -17,11 +17,19 @@
     <%= form.file_field :images, multiple: true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class= 'width-400'>
+    <strong>IMAGE:</strong>
+    <% @ad.images.each do |i| %>
+      <%= image_tag(i, class: 'width-100') %>
+      <%= link_to 'X', post_ad_step_path(ad: @ad, img: i), method: :delete %>
+    <%end%>
   </div>
 
   <div class="actions">
-    <td><%= link_to 'Finalize', checkout_path(@ad) %></td>
+    <%= form.submit 'Save and Continue' %>
+  </div>
+
+  <div class="actions">
+    <td><%= link_to 'SKIP', next_wizard_path(ad: @ad) %></td>
   </div>
 <% end %>

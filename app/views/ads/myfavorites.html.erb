@@ -1,10 +1,10 @@
-
 <h1>My Favorite Ads</h1>
 
 <div>
   <table class="table">
     <thead>
       <tr>
+        <th>Image</th>
         <th>City</th>
         <th>Mileage</th>
         <th>Car make</th>
@@ -22,6 +22,13 @@
     <tbody>
       <% @ads.each do |ad| %>
         <tr>
+          <td>
+            <div class= 'width-100'>
+              <% if ad.images.any? %>
+                <%= link_to image_tag(ad.images.first, class: 'width-100'), ads_path %>
+                <% end %>
+            </div>
+          </td>
           <td><%= ad.city %></td>
           <td><%= ad.mileage %></td>
           <td><%= ad.car_make %></td>
@@ -32,13 +39,13 @@
           <td><%= ad.color %></td>
           <td><%= ad.assembly_type %></td>
           <td><%= ad.description %></td>
-          <td><%= link_to 'Show', ad %></td>
+          <td><%= link_to 'Show', ad, class: "btn btn-info" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-primary"><%== pagy_nav(@pagy) %></button>
+<div>
+  <%== pagy_bootstrap_combo_nav_js(@pagy) %>
 </div>

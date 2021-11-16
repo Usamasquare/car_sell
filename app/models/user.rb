@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   include Pay::Billable
   pay_customer
-  has_many :ads
-  has_many :favorites
-  has_many :favorite_ads, through: :favorites, source: :ads
+  has_many :ads, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_ads, through: :favorites, source: :ad
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

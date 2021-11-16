@@ -6,6 +6,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Image</th>
         <th>City</th>
         <th>Mileage</th>
         <th>Car make</th>
@@ -23,6 +24,13 @@
     <tbody>
       <% @my_ads.each do |ad| %>
         <tr>
+          <td>
+            <div class= 'width-100'>
+              <% if ad.images.any? %>
+                <%= link_to image_tag(ad.images.first, class: 'width-100'), ads_path %>
+                <% end %>
+            </div>
+          </td>
           <td><%= ad.city %></td>
           <td><%= ad.mileage %></td>
           <td><%= ad.car_make %></td>
@@ -33,16 +41,17 @@
           <td><%= ad.color %></td>
           <td><%= ad.assembly_type %></td>
           <td><%= ad.description %></td>
-          <td><%= link_to 'Show', ad %></td>
-          <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-          <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Show', ad, class: "btn btn-info" %></td>
+          <td><%= link_to 'Edit', edit_ad_path(ad), class:"btn btn-light" %></td>
+          <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-warning" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 
-<button type="button" class="btn btn-dark"><%= link_to 'New Ad', new_ad_path %></button>
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-primary"><%== pagy_nav(@pagy) %></button>
+<%= link_to 'New Ad', new_ad_path, class:"btn btn-dark" %></button>
+
+<div>
+  <%== pagy_bootstrap_combo_nav_js(@pagy) %>
 </div>

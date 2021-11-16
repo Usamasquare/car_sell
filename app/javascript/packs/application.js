@@ -16,9 +16,10 @@ ActiveStorage.start()
 require("trix")
 require("@rails/actiontext")
 
-
 $(document).ready(function () {
-  $('.try').on('click', function () {
-    $("").removeClass("invisible").addClass("visible");
+  $(".show").click(function(){
+    $(".test").toggle(100);
+    $(".test").removeClass("d-none");
   });
 })
+

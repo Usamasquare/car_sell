@@ -1,13 +1,19 @@
 class Ad < ApplicationRecord
   include PgSearch::Model
 
+  enum status: [ :active, :closed ]
+
   has_many_attached :images
-  has_many :favorites
+  has_many :favorites, dependent: :destroy
   has_many :users, through: :favorites
   has_rich_text :description
   belongs_to :user
 
   pg_search_scope :global_search, against: [:color, :city, :car_make, :engine_type, :transmission, :assembly_type, :mileage, :price, :engine_capacity]
+
+  after_create do |ad|
+    ad.update(status: "active")
+  end
 
   CITIES = ['Rawalpindi', 'Lahore', 'Quetta', 'Karachi', 'Peshawar', 'Islamabad' ].freeze
   MAKE = ['Suzuki', 'Toyota', 'Honda', 'BMW' ].freeze

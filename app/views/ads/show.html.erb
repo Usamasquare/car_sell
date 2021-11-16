@@ -31,6 +31,11 @@
               <strong>Description:</strong>
               <%= @ad.description %>
             </p>
+
+             <p>
+              <strong>Primary Contact:</strong>
+              <%= @ad.user.phone %>
+            </p>
           </div>
 
           <div class="col-4">
@@ -57,6 +62,21 @@
             <p>
               <strong>Assembly type:</strong>
               <%= @ad.assembly_type %>
+            </p>
+
+            <p>
+              <strong>Featured:</strong>
+              <%= @ad.featured %>
+            </p>
+
+            <p>
+              <strong>Secondary Contact:</strong>
+              <%= @ad.secondary_contact %>
+            </p>
+
+            <p>
+              <strong>Status:</strong>
+              <%= @ad.status %>
             </p>
 
           </div>

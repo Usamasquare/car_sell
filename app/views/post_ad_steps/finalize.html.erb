@@ -22,7 +22,11 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'POST AD' %>
+  </div>
+
+  <div class="actions">
+    <td><%= link_to 'SKIP', next_wizard_path(ad: @ad) %></td>
   </div>
 
 <% end %>

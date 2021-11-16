@@ -16,13 +16,26 @@ class PostAdStepsController < ApplicationController
     @ad = current_user.ads.find(params[:ad_id])
     case step
       when :add_images
-        if ((params[:ad]).present?)
-          @ad.images.attach(params[:ad][:images])
+        if params[:ad].present?
+          @ad.images.attach(ad_params[:images])
         end
       when :finalize
-        @ad.update(secondary_contact: params[:ad][:secondary_contact])
+        @ad.update(secondary_contact: ad_params[:secondary_contact])
       end
-    render_wizard(@ad,{},ad: @ad)
+    render_wizard(@ad, {}, ad: @ad)
+  end
+
+  def destroy
+    @ad = current_user.ads.find(params[:ad])
+    @ad.images.find(params[:img]).purge
+    redirect_to post_ad_steps_path(ad_id: @ad.id)
+
+  end
+
+  private
+
+  def ad_params
+    params.require(:ad).permit(:secondary_contact, images: []) if params[:ad].present?
   end
 
 end

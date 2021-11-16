@@ -1,3 +1,4 @@
+<script src='https://js.stripe.com/v3/'></script>
 <h1>Get Your Ad Featured</h1>
 <div>
   <%= render partial: 'pay/stripe/checkout_button', locals: { session: @checkout_session, title: 'Feature Ad' }%>
