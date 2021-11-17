@@ -1,7 +1,7 @@
 module Search
   def filter
     @ads = Ad.all
-    @ads = @ads.all.global_search(params[:city])if(params[:city].present?)
+    @ads = @ads.all.global_search(params[:city]) if (params[:city].present?)
     @ads = @ads.all.global_search(params[:color])if(params[:color].present?)
     @ads = @ads.all.global_search(params[:mileage])if(params[:mileage].present?)
     @ads = @ads.all.global_search(params[:car_make])if(params[:car_make].present?)

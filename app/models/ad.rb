@@ -20,7 +20,7 @@ class Ad < ApplicationRecord
   ENGINE = ['Petrol', 'Diesel', 'Hybrid' ].freeze
   TRANSMISSION = ['Automatic', 'Manual' ].freeze
   ASSEMBLY = ['Local', 'Imported' ].freeze
-  COLOR = ['Black' ,'White' ].freeze
+  COLOR = ['Black', 'White', 'Other'].freeze
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
 
   validate :validate_images

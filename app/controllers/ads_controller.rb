@@ -1,6 +1,6 @@
 class AdsController < ApplicationController
   include Search
-  before_action :set_ad, only: %i[ close edit update destroy ]
+  before_action :set_ad, only: %i[ activate close edit update destroy ]
   before_action :filter, only: [ :index ]
   before_action :authenticate, only: [ :favorites ]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -20,9 +20,18 @@ class AdsController < ApplicationController
   def edit
   end
 
-  def favorites
+  def favorite
     @ad = Ad.find(params[:id])
     current_user.favorite_ads << @ad if current_user.favorite_ad_ids.exclude?(@ad.id)
+    redirect_to ads_path
+  end
+
+  def unfavorite
+    @ad = Ad.find(params[:id])
+    if (current_user.favorite_ads.exists?(@ad.id))
+      current_user.favorite_ads.delete(@ad.id)
+    end
+
     redirect_to ads_path
   end
 
@@ -57,6 +66,11 @@ class AdsController < ApplicationController
     redirect_to ad_path(@ad)
   end
 
+  def activate
+    @ad.update(status: "active")
+    redirect_to ad_path(@ad)
+  end
+
   def my_posts
     @pagy, @my_ads = pagy(current_user.ads, items: 3)
   end
@@ -64,7 +78,7 @@ class AdsController < ApplicationController
   def destroy
     @ad.destroy
     respond_to do |format|
-      format.html { redirect_to my_posts_url, notice: "Ad was successfully destroyed." }
+      format.html { redirect_to my_posts_ads_url, notice: "Ad was successfully destroyed." }
       format.json { head :no_content }
     end
   end

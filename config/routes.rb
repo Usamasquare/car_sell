@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
   resources :ads do
     member do
-      get :favorites
+      get :favorite
+      get :unfavorite
       get :close
+      get :activate
     end
     collection do
       get :my_posts

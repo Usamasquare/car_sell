@@ -13,48 +13,48 @@
 
   <div class="field">
     <%= form.label :city %>
-    <%= form.select :city, Ad::CITIES %>
+    <%= form.select :city, Ad::CITIES, { prompt:"--Select--" }, class: "form-control"  %>
   </div>
 
   <div class="field">
     <%= form.label :mileage %>
-    <%= form.number_field :mileage %>
+    <%= form.number_field :mileage, class: "form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :car_make %>
-    <%= form.select :car_make, Ad::MAKE %>
+    <%= form.select :car_make, Ad::MAKE, { prompt:"--Select--" }, class: "form-control"  %>
   </div>
 
   <div class="field">
     <%= form.label :price %>
-    <%= form.text_field :price %>
+    <%= form.text_field :price, class: "form-control"%>
   </div>
 
   <div class="field">
     <%= form.label :engine_type %>
-    <%= form.select :engine_type, Ad::ENGINE  %>
+    <%= form.select :engine_type, Ad::ENGINE, { prompt:"--Select--" }, class: "form-control"   %>
   </div>
 
   <div class="field">
     <%= form.label :transmission %>
-    <%= form.select :transmission, Ad::TRANSMISSION %>
+    <%= form.select :transmission, Ad::TRANSMISSION, { prompt:"--Select--" }, class: "form-control"  %>
   </div>
 
   <div class="field">
     <%= form.label :engine_capacity %>
-    <%= form.number_field :engine_capacity %>
+    <%= form.number_field :engine_capacity, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :color %>
-    <%= form.select :color, Ad::COLOR, include_blank: true %>
-    <%= form.text_field :color %>
+  <div class="mb-3">
+      <%= form.label :color, class: "form-label me-1" %>
+      <%= form.select :color, Ad::COLOR, {}, class: "form-control color_field" , required: true, prompt:"--Select--"  %>
+      <%= form.text_field :color_detail , class: "form-control mt-2 color_detail d-none", placeholder: "Enter other color name" %>
   </div>
 
   <div class="field">
     <%= form.label :assembly_type %>
-    <%= form.select :assembly_type, Ad::ASSEMBLY %>
+    <%= form.select :assembly_type, Ad::ASSEMBLY, { prompt:"--Select--" }, class: "form-control"  %>
   </div>
 
   <div class="field">
@@ -63,6 +63,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Next', class:"btn btn-warning" %>
   </div>
 <% end %>

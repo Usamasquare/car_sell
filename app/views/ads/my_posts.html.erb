@@ -43,6 +43,14 @@
           <td><%= ad.description %></td>
           <td><%= link_to 'Show', ad, class: "btn btn-info" %></td>
           <td><%= link_to 'Edit', edit_ad_path(ad), class:"btn btn-light" %></td>
+          <td>
+            <div>
+              <% if ad.active? %>
+                <%= link_to 'Close', close_ad_path(ad), class:"btn btn-primary" %></td>
+              <% else %>
+                <%= link_to 'Activate', activate_ad_path(ad), class:"btn btn-primary" %></td>
+              <% end %>
+            </div>
           <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-warning" %></td>
         </tr>
       <% end %>
