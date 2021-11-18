@@ -29,7 +29,6 @@ class PostAdStepsController < ApplicationController
     @ad = current_user.ads.find(params[:ad])
     @ad.images.find(params[:img]).purge
     redirect_to post_ad_steps_path(ad_id: @ad.id)
-
   end
 
   private

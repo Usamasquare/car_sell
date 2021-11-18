@@ -3,6 +3,7 @@ class AdsController < ApplicationController
   before_action :set_ad, only: %i[ activate close edit update destroy ]
   before_action :authenticate, only: [ :favorites ]
   skip_before_action :authenticate_user!, only: [ :index, :show ]
+
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
