@@ -14,19 +14,20 @@
   <div>
     <%= hidden_field_tag :ad_id, @ad.id %>
     <%= form.label :secondary_contact %>
-    <%= form.text_field :secondary_contact%>
+    <%= form.text_field :secondary_contact, class:'form-control'%>
   </div>
 
-  <div class="actions">
-    <td><%= link_to 'Get Featured', checkout_path(@ad) %></td>
-  </div>
-
-  <div class="actions">
-    <%= form.submit 'POST AD' %>
-  </div>
-
-  <div class="actions">
-    <td><%= link_to 'SKIP', next_wizard_path(ad: @ad) %></td>
+  <div class="row">
+    <div class="col-2">
+      <div class="actions">
+        <td><%= link_to 'Get Featured', checkout_path(@ad), class: 'btn btn-primary' %></td>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="actions">
+        <%= form.submit 'POST AD' , class: 'btn btn-outline-primary'%>
+      </div>
+    </div>
   </div>
 
 <% end %>

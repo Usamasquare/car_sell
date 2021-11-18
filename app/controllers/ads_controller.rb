@@ -1,11 +1,13 @@
 class AdsController < ApplicationController
   include Search
   before_action :set_ad, only: %i[ activate close edit update destroy ]
-  before_action :filter, only: [ :index ]
   before_action :authenticate, only: [ :favorites ]
+  skip_before_action :authenticate_user!, only: [ :index, :show ]
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
+    @ads = filter(Ad)
+    @pagy, @ads = pagy(@ads, items: 7)
     @colors = Ad.pluck(:color).reject(&:blank?).uniq
   end
 

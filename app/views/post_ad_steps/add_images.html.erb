@@ -11,25 +11,31 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="mb-3">
     <%= hidden_field_tag :ad_id, @ad.id %>
-    <%= form.label :images %>
-    <%= form.file_field :images, multiple: true %>
+    <%= form.label :images , class:"form-label" %>
+    <%= form.file_field :images, multiple: true, class:"form-control" %>
   </div>
 
-  <div class= 'width-400'>
+  <div class= 'width-400 row g-10' >
     <strong>IMAGE:</strong>
     <% @ad.images.each do |i| %>
-      <%= image_tag(i, class: 'width-100') %>
-      <%= link_to 'X', post_ad_step_path(ad: @ad, img: i), method: :delete %>
+      <div class="col-6">
+        <%= image_tag(i, class: 'width-100') %>
+        <%= link_to 'X', post_ad_step_path(ad: @ad, img: i), method: :delete, class:'btn btn-danger' %>
+      </div>
     <%end%>
   </div>
-
-  <div class="actions">
-    <%= form.submit 'Save and Continue' %>
-  </div>
-
-  <div class="actions">
-    <td><%= link_to 'SKIP', next_wizard_path(ad: @ad) %></td>
+  <div class="row">
+    <div class="col-1">
+      <div class="actions">
+        <%= form.submit 'Continue', class:'btn btn-primary' %>
+      </div>
+    </div>
+    <div class="col-1">
+      <div class="actions">
+        <td><%= link_to 'SKIP', next_wizard_path(ad: @ad), class: 'btn btn-outline-primary' %></td>
+      </div>
+    </div>
   </div>
 <% end %>

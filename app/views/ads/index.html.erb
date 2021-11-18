@@ -131,10 +131,12 @@
           <td><%= ad.description %></td>
           <td>
             <div>
-              <% if (current_user.favorite_ads.exists?(ad.id)) %>
-                <%= link_to 'Unfavorite', unfavorite_ad_path(ad), class:"btn btn-danger" %></td>
-              <% else %>
-                <%= link_to 'Favorite', favorite_ad_path(ad), class:"btn btn-danger" %></td>
+              <% if user_signed_in? %>
+                <% if (current_user.favorite_ads.exists?(ad.id)) %>
+                  <%= link_to 'Unfavorite', unfavorite_ad_path(ad), class:"btn btn-danger" %></td>
+                <% else %>
+                  <%= link_to 'Favorite', favorite_ad_path(ad), class:"btn btn-danger" %></td>
+                <% end %>
               <% end %>
             </div>
           <td><%= link_to 'Show', ad, class:"btn btn-info" %></td>

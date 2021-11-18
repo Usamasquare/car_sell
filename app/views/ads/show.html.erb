@@ -32,10 +32,6 @@
               <%= @ad.description %>
             </p>
 
-             <p>
-              <strong>Primary Contact:</strong>
-              <%= @ad.user.phone %>
-            </p>
           </div>
 
           <div class="col-4">
@@ -70,30 +66,80 @@
             </p>
 
             <p>
-              <strong>Secondary Contact:</strong>
-              <%= @ad.secondary_contact %>
-            </p>
-
-            <p>
               <strong>Status:</strong>
               <%= @ad.status %>
             </p>
-
           </div>
 
           <div class="col-4">
-            <div class= 'width-400'>
-              <strong>IMAGE:</strong>
-              <% @ad.images.each do |i| %>
-                <%= link_to image_tag(i, class: 'width-100'), ads_path %>
-              <%end%>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% @ad.images.each_with_index do |image, index| %>
+                  <div class="carousel-item <%= 'active' if index.zero? %>">
+                    <%= link_to image_tag(image, class: 'd-block w-100'), ads_path %>
+                  </div>
+                <% end %>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
-
         </div>
-        <% if (current_user.ads.exists?(@ad.id)) %>
-          <%= link_to 'Edit', edit_ad_path(@ad), class:"btn btn-light" %>
+        <% if user_signed_in? %>
+          <% if (current_user.ads.exists?(@ad.id)) %>
+            <%= link_to 'Edit', edit_ad_path(@ad), class:"btn btn-light" %>
+          <% end %>
         <% end %>
       <%= link_to 'Back', ads_path, class:"btn btn-light" %>
   </div>
 </div>
+<div class="container-fluid">
+  <div class="text-center mt-4">
+    <div class="card mt-4">
+      <div class="card-body">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          See Phone Number
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Phone Number</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <% if user_signed_in? %>
+                  <p>
+                    <strong>Primary Contact:</strong>
+                    <%= @ad.user.phone %>
+                  </p>
+                  <% if @ad.secondary_contact.present? %>
+                    <p>
+                      <strong>Secondary Contact:</strong>
+                      <%= @ad.secondary_contact %>
+                    </p>
+                  <% end %>
+                <% end %>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -8,7 +8,8 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import $ from 'jquery'
-
+import "bootstrap";
+import "../stylesheets/application"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
@@ -17,4 +18,5 @@ require("trix")
 require("@rails/actiontext")
 require('./search')
 require('./color')
+require('./popup')
 
