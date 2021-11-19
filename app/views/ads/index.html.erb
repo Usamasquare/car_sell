@@ -1,7 +1,6 @@
-
 <div>
   <p id="notice"><%= notice %></p>
-  <div style="padding: 30px; ">
+  <div class="main-body-padding-30">
     <div class="card", style="border-radius: 10px">
     <h5 class="card-header">Explore</h5>
       <div class="card-body">
@@ -25,6 +24,8 @@
               <div class="field">
                 <%= f.label :price %>
                 <%= f.text_field :price, class: "form-control", include_blank: true  %>
+                <% options_for_select([ "VISA", "MasterCard" ]) %>
+                <%= f.select :desired_attribute, ['Upto 5 lacs', 'Upto 10 lacs', 'Upto 20 lacs', 'Upto 50 lacs', 'Above 50 lacs '], { prompt:"--Select--" }, class:'form-control'%>
               </div>
             </div>
           </div>
@@ -77,7 +78,6 @@
               </div>
 
             </div>
-
           </div>
 
           <div class="row g-3">
@@ -93,8 +93,8 @@
       </div>
     </div>
   </div>
-  <div style="padding: 30px">
-    <div class="card text-center", style="border-radius: 10px;">
+  <div class="main-body-padding-30">
+    <div class="card text-center border-radius-10px">
       <div class="card-header">
         <h1>Ads</h1>
       </div>

@@ -25,7 +25,7 @@ class User < ApplicationRecord
     }
 
     rules.each do |message, regex|
-      errors.add( :password, message ) unless password.match( regex )
+      errors.add( :password, message ) unless password.match( regex ) if password.present?
     end
   end
 

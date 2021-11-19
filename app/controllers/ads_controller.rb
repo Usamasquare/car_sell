@@ -7,6 +7,7 @@ class AdsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
+    #byebug
     @ads = filter(Ad)
     @pagy, @ads = pagy(@ads, items: 7)
     @colors = Ad.pluck(:color).reject(&:blank?).uniq

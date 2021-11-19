@@ -10,6 +10,7 @@ module Search
     @ads = @ads.global_search(params[:engine_type]) if (params[:engine_type].present?)
     @ads = @ads.global_search(params[:assembly_type]) if (params[:assembly_type].present?)
     @ads = @ads.global_search(params[:transmission]) if (params[:transmission].present?)
+
     return @ads
   end
 end

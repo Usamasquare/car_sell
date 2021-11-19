@@ -11,18 +11,16 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body style="background-image: linear-gradient(to right, #D500F9, #FFD54F)">
+  <body class='bg_style'>
     <header>
       <%= render 'layouts/header' %>
     </header>
-    <div style="padding: 30px">
-      <div class="card", style="padding: 10px; border-radius: 10px;">
+    <div class='main-body-padding-30'>
+      <div class="card main-body-card">
         <main role="main">
           <%= content_for?(:content) ? yield(:content) : yield %>
         </main>
       </div>
     </div>
-
-
   </body>
 </html>
