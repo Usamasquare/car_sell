@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_042313) do
+ActiveRecord::Schema.define(version: 2021_11_23_103637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_042313) do
     t.boolean "featured", default: false
     t.string "secondary_contact"
     t.integer "status"
+    t.string "color_detail"
     t.index ["user_id"], name: "index_ads_on_user_id"
   end
 

@@ -52,7 +52,11 @@
 
             <p>
               <strong>Color:</strong>
-              <%= @ad.color %>
+              <% if @ad.color == 'Other' %>
+                <%= @ad.color_detail %>
+              <% else %>
+                <%= @ad.color %>
+              <% end %>
             </p>
 
             <p>

@@ -10,6 +10,7 @@ class AdsController < ApplicationController
     @ads = Ad.filter(params)
     @pagy, @ads = pagy(@ads, items: 7)
     @colors = Ad.pluck(:color).reject(&:blank?).uniq
+    @colors << Ad.pluck(:color_detail).reject(&:blank?).uniq
   end
 
   def show
@@ -101,6 +102,6 @@ class AdsController < ApplicationController
   end
 
   def ad_params
-    params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :assembly_type, :description, images: [])
+    params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :color_detail, :assembly_type, :description, images: [])
   end
 end
