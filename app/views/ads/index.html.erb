@@ -23,9 +23,7 @@
             <div class="col">
               <div class="field">
                 <%= f.label :price %>
-                <%= f.text_field :price, class: "form-control", include_blank: true  %>
-                <% options_for_select([ "VISA", "MasterCard" ]) %>
-                <%= f.select :desired_attribute, ['Upto 5 lacs', 'Upto 10 lacs', 'Upto 20 lacs', 'Upto 50 lacs', 'Above 50 lacs '], { prompt:"--Select--" }, class:'form-control'%>
+                <%= f.select :desired_attribute, [['Upto 5 lacs', 5], ['Upto 10 lacs', 10], ['Upto 20 lacs', 20], ['Upto 50 lacs', 50], ['Above 50 lacs', 51]], { prompt:"--Select--" }, class:'form-control'%>
               </div>
             </div>
           </div>
