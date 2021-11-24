@@ -1,5 +1,4 @@
 class AdsController < ApplicationController
-  #include Search
   before_action :set_ad, only: %i[ activate close edit update destroy ]
   before_action :authenticate, only: [ :favorites ]
   skip_before_action :authenticate_user!, only: [ :index, :show ]

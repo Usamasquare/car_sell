@@ -21,6 +21,7 @@ class Ad < ApplicationRecord
   TRANSMISSION = ['Automatic', 'Manual' ].freeze
   ASSEMBLY = ['Local', 'Imported' ].freeze
   COLOR = ['Black', 'White', 'Other'].freeze
+
   PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
 
   validate :validate_images
@@ -31,9 +32,9 @@ class Ad < ApplicationRecord
   validates :color, presence: true
   validates :assembly_type, inclusion: { in:  ASSEMBLY, message: '%{value} is invalid' }
   validates :secondary_contact, format: {with: PK_PHONE_REGEX, message: 'format should be +92-3XX-XXXXXXX', multiline: true}, allow_blank: true
-  validates :mileage, numericality: true,  presence: true
-  validates :price, numericality: true, presence: true
-  validates :engine_capacity, numericality: true, presence: true
+  validates :mileage, numericality: true,  presence: true, numericality: {greater_than_or_equal_to: 0 }
+  validates :price, numericality: true, presence: true, numericality: {greater_than_or_equal_to: 0 }
+  validates :engine_capacity, numericality: true, presence: true, numericality: {greater_than_or_equal_to: 0 }
 
   def self.filter(params)
     @ads = Ad.all
