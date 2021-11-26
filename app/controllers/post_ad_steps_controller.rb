@@ -1,6 +1,7 @@
 class PostAdStepsController < ApplicationController
   include Wicked::Wizard
   steps :add_images, :finalize
+  before_action :set_ad, only: [ :update ]
 
   def show
     case step
@@ -13,7 +14,6 @@ class PostAdStepsController < ApplicationController
   end
 
   def update
-    @ad = current_user.ads.find(params[:ad_id])
     case step
       when :add_images
         if params[:ad].present?
@@ -32,6 +32,14 @@ class PostAdStepsController < ApplicationController
   end
 
   private
+
+  def set_ad
+    @ad = current_user.ads.find(params[:ad_id])
+    return if @ad.present?
+
+    redirect_to root_path, alert: 'Invalid Access'
+  end
+
 
   def ad_params
     params.require(:ad).permit(:secondary_contact, images: []) if params[:ad].present?

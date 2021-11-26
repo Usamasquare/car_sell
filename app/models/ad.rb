@@ -37,24 +37,24 @@ class Ad < ApplicationRecord
   validates :engine_capacity, numericality: true, presence: true, numericality: {greater_than_or_equal_to: 0 }
 
   def self.filter(params)
-    @ads = Ad.all
-    if(params[:desired_attribute].present?)
-      if(params[:desired_attribute].to_i == 51)
-        @ads = @ads.where('price > 50')
+    filtered_result = Ad.all
+    if(params[:price_filter].present?)
+      if(params[:price_filter].to_i == 51)
+        filtered_result = filtered_result.where('price > 50')
       else
-        @ads = @ads.where(price: (0)..params[:desired_attribute].to_i)
+        filtered_result = filtered_result.where(price: (0)..params[:price_filter].to_i)
       end
     end
-    @ads = @ads.global_search(params[:city]) if (params[:city].present?)
-    @ads = @ads.global_search(params[:color]) if (params[:color].present?)
-    @ads = @ads.global_search(params[:mileage]) if (params[:mileage].present?)
-    @ads = @ads.global_search(params[:car_make]) if (params[:car_make].present?)
-    @ads = @ads.global_search(params[:engine_capacity]) if (params[:engine_capacity].present?)
-    @ads = @ads.global_search(params[:engine_type]) if (params[:engine_type].present?)
-    @ads = @ads.global_search(params[:assembly_type]) if (params[:assembly_type].present?)
-    @ads = @ads.global_search(params[:transmission]) if (params[:transmission].present?)
+    filtered_result = filtered_result.global_search(params[:city]) if (params[:city].present?)
+    filtered_result = filtered_result.global_search(params[:color]) if (params[:color].present?)
+    filtered_result = filtered_result.global_search(params[:mileage]) if (params[:mileage].present?)
+    filtered_result = filtered_result.global_search(params[:car_make]) if (params[:car_make].present?)
+    filtered_result = filtered_result.global_search(params[:engine_capacity]) if (params[:engine_capacity].present?)
+    filtered_result = filtered_result.global_search(params[:engine_type]) if (params[:engine_type].present?)
+    filtered_result = filtered_result.global_search(params[:assembly_type]) if (params[:assembly_type].present?)
+    filtered_result = filtered_result.global_search(params[:transmission]) if (params[:transmission].present?)
 
-    return @ads
+    return filtered_result
   end
 
   private

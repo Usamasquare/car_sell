@@ -1,6 +1,5 @@
 class AdsController < ApplicationController
   before_action :set_ad, only: %i[ activate close edit update destroy ]
-  before_action :authenticate, only: [ :favorites ]
   skip_before_action :authenticate_user!, only: [ :index, :show ]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -92,12 +91,11 @@ class AdsController < ApplicationController
     render plain: "404 Not Found", status: 404
   end
 
-  def authenticate
-      redirect_to new_user_registration_path unless user_signed_in?
-  end
-
   def set_ad
-    @ad = current_user.ads.find(params[:id])
+    @ad = current_user.ads.find_by(id: params[:id])
+    return if @ad.present?
+
+    redirect_to root_path, alert: 'Invalid Access'
   end
 
   def ad_params

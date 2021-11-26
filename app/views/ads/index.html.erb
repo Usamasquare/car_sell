@@ -23,12 +23,12 @@
             <div class="col">
               <div class="field">
                 <%= f.label :price %>
-                <%= f.select :desired_attribute, [['Upto 5 lacs', 5], ['Upto 10 lacs', 10], ['Upto 20 lacs', 20], ['Upto 50 lacs', 50], ['Above 50 lacs', 51]], { prompt:"--Select--" }, class:'form-control'%>
+                <%= f.select :price_filter, [['Upto 5 lacs', 5], ['Upto 10 lacs', 10], ['Upto 20 lacs', 20], ['Upto 50 lacs', 50], ['Above 50 lacs', 51]], { prompt:"--Select--" }, class:'form-control'%>
               </div>
             </div>
           </div>
 
-          <div class="test d-none">
+          <div class="toggle-search d-none">
             <div class="row g-3">
               <div class="col">
                 <div class="field">
