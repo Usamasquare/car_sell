@@ -9,16 +9,19 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= yield :stripe_js%>
+
   </head>
 
   <body class='bg_style'>
     <header>
       <%= render 'layouts/header' %>
     </header>
+    <%= render 'devise/shared/flash_messages' %>
     <div class='main-body-padding-30'>
       <div class="card main-body-card">
         <main role="main">
-          <%= content_for?(:content) ? yield(:content) : yield %>
+          <%= content_for?(:content) ? yield(:content) : yield  %>
         </main>
       </div>
     </div>

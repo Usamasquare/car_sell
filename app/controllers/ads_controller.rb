@@ -25,7 +25,7 @@ class AdsController < ApplicationController
   def favorite
     @ad = Ad.find(params[:id])
     current_user.favorite_ads << @ad if current_user.favorite_ad_ids.exclude?(@ad.id)
-    redirect_to ads_path
+    redirect_to ads_path, notice: "Added to favorites"
   end
 
   def unfavorite
@@ -34,7 +34,7 @@ class AdsController < ApplicationController
       current_user.favorite_ads.delete(@ad.id)
     end
 
-    redirect_to ads_path
+    redirect_to ads_path, notice: "Ad is removed from favorites"
   end
 
   def myfavorites
@@ -65,12 +65,12 @@ class AdsController < ApplicationController
 
   def close
     @ad.update(status: "closed")
-    redirect_to ad_path(@ad)
+    redirect_to ad_path(@ad), notice: "Ad is closed successfully"
   end
 
   def activate
     @ad.update(status: "active")
-    redirect_to ad_path(@ad)
+    redirect_to ad_path(@ad), notice: "Ad is activated successfully"
   end
 
   def my_posts

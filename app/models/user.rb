@@ -9,10 +9,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
+  PK_PHONE_REGEX = /^((\+92))-{0,1}\d{3}-{0,1}\d{7}$/
+
   validates :phone, :username, uniqueness: true
   validates_format_of :phone, with: /^[0-9]{11}$/, :multiline => true
   validate :password_validations
   validates_format_of :username, with: /^[-@.\/#&+\w\s]*$/, :multiline => true
+  validates :phone, format: {with: PK_PHONE_REGEX, message: 'format should be +92-3XX-XXXXXXX', multiline: true}
 
   attr_writer :login
 

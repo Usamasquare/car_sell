@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= render 'devise/shared/error_messages', resource: resource %>
+        <%= render 'devise/shared/error_messages', resource: resource, class:"alert-link" %>
 
         <div class='field'>
           <b><%= f.label :email %></b><br />
@@ -14,7 +14,7 @@
 
         <div class='field'>
          <p><b><%= f.label :phone %></b>(valid 11 digit phone number)<br />
-         <%= f.text_field :phone, class: 'form-control' %></p>
+         <%= f.text_field :phone, class: 'form-control',placeholder: '+92-3XX-XXXXXXX' %></p>
         </div>
 
         <div class='field'>
