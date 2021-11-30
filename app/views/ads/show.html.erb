@@ -3,104 +3,105 @@
   <div class="text-center mt-4">
     <h2>Display Ad</h2>
   </div>
-    <div class="card mt-4">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-4">
-            <p>
-              <strong>City:</strong>
-              <%= @ad.city %>
-            </p>
+  <div class="card mt-4">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-4">
+          <p>
+            <strong>City:</strong>
+            <%= @ad.city %>
+          </p>
 
-            <p>
-              <strong>Mileage:</strong>
-              <%= @ad.mileage %>
-            </p>
+          <p>
+            <strong>Mileage:</strong>
+            <%= @ad.mileage %>
+          </p>
 
-            <p>
-              <strong>Car make:</strong>
-              <%= @ad.car_make %>
-            </p>
+          <p>
+            <strong>Car make:</strong>
+            <%= @ad.car_make %>
+          </p>
 
-            <p>
-              <strong>Price:</strong>
-              <%= @ad.price %>
-            </p>
+          <p>
+            <strong>Price:</strong>
+            <%= @ad.price %>
+          </p>
 
-            <p>
-              <strong>Description:</strong>
-              <%= @ad.description %>
-            </p>
+          <p>
+            <strong>Description:</strong>
+            <%= @ad.description %>
+          </p>
 
-          </div>
+        </div>
 
-          <div class="col-4">
-            <p>
-              <strong>Engine type:</strong>
-              <%= @ad.engine_type %>
-            </p>
+        <div class="col-4">
+          <p>
+            <strong>Engine type:</strong>
+            <%= @ad.engine_type %>
+          </p>
 
-            <p>
-              <strong>Transmission:</strong>
-              <%= @ad.transmission %>
-            </p>
+          <p>
+            <strong>Transmission:</strong>
+            <%= @ad.transmission %>
+          </p>
 
-            <p>
-              <strong>Engine capacity:</strong>
-              <%= @ad.engine_capacity %>
-            </p>
+          <p>
+            <strong>Engine capacity:</strong>
+            <%= @ad.engine_capacity %>
+          </p>
 
-            <p>
-              <strong>Color:</strong>
-              <% if @ad.color == 'Other' %>
-                <%= @ad.color_detail %>
-              <% else %>
-                <%= @ad.color %>
+          <p>
+            <strong>Color:</strong>
+            <% if @ad.color == 'Other' %>
+              <%= @ad.color_detail %>
+            <% else %>
+              <%= @ad.color %>
+            <% end %>
+          </p>
+
+          <p>
+            <strong>Assembly type:</strong>
+            <%= @ad.assembly_type %>
+          </p>
+
+          <p>
+            <strong>Featured:</strong>
+            <%= @ad.featured %>
+          </p>
+
+          <p>
+            <strong>Status:</strong>
+            <%= @ad.status %>
+          </p>
+        </div>
+
+        <div class="col-4">
+          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% @ad.images.each_with_index do |image, index| %>
+                <div class="carousel-item <%= 'active' if index.zero? %>">
+                  <%= link_to image_tag(image, class: 'd-block w-100'), ads_path %>
+                </div>
               <% end %>
-            </p>
-
-            <p>
-              <strong>Assembly type:</strong>
-              <%= @ad.assembly_type %>
-            </p>
-
-            <p>
-              <strong>Featured:</strong>
-              <%= @ad.featured %>
-            </p>
-
-            <p>
-              <strong>Status:</strong>
-              <%= @ad.status %>
-            </p>
-          </div>
-
-          <div class="col-4">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                <% @ad.images.each_with_index do |image, index| %>
-                  <div class="carousel-item <%= 'active' if index.zero? %>">
-                    <%= link_to image_tag(image, class: 'd-block w-100'), ads_path %>
-                  </div>
-                <% end %>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
         </div>
-        <% if user_signed_in? %>
-          <% if (current_user.ads.exists?(@ad.id)) %>
-            <%= link_to 'Edit', edit_ad_path(@ad), class:"btn btn-light" %>
-          <% end %>
+      </div>
+      <% if user_signed_in? %>
+        <% if (current_user.ads.exists?(@ad.id)) %>
+          <%= link_to 'Edit', edit_ad_path(@ad), class: "btn btn-light" %>
         <% end %>
-      <%= link_to 'Back', ads_path, class:"btn btn-light" %>
+      <% end %>
+      <%= link_to 'Back', ads_path, class: "btn btn-light" %>
+    </div>
   </div>
 </div>
 <div class="container-fluid">

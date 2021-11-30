@@ -1,6 +1,8 @@
 class AdsController < ApplicationController
-  before_action :set_ad, only: %i[ activate close edit update destroy ]
-  skip_before_action :authenticate_user!, only: [ :index, :show ]
+  before_action :set_ad, only: %i[activate close edit update destroy]
+  before_action :set_global_ad, only: %i[show toggle_favorite]
+
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -22,22 +24,12 @@ class AdsController < ApplicationController
   def edit
   end
 
-  def favorite
-    @ad = Ad.find(params[:id])
-    current_user.favorite_ads << @ad if current_user.favorite_ad_ids.exclude?(@ad.id)
-    redirect_to ads_path, notice: "Added to favorites"
-  end
-
-  def unfavorite
-    @ad = Ad.find(params[:id])
-    if (current_user.favorite_ads.exists?(@ad.id))
-      current_user.favorite_ads.delete(@ad.id)
-    end
-
+  def toggle_favorite
+    current_user.toggle_favorite_ad(@ad)
     redirect_to ads_path, notice: "Ad is removed from favorites"
   end
 
-  def myfavorites
+  def my_favorites
     @ads = current_user.favorite_ads
     @pagy, @ads = pagy(@ads, items: 6)
   end
@@ -52,25 +44,16 @@ class AdsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @ad.update(ad_params)
-        format.html { redirect_to post_ad_steps_path(ad_id: @ad.id), notice: "Ad was successfully updated." }
-        format.json { render :show, status: :ok, location: @ad }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
-      end
+    if @ad.update(ad_params)
+      redirect_to post_ad_steps_path(ad_id: @ad.id), notice: "Ad was successfully updated."
+    else
+      render :edit
     end
   end
 
-  def close
-    @ad.update(status: "closed")
+  def toggle_status
+    @ad.toggle_status!
     redirect_to ad_path(@ad), notice: "Ad is closed successfully"
-  end
-
-  def activate
-    @ad.update(status: "active")
-    redirect_to ad_path(@ad), notice: "Ad is activated successfully"
   end
 
   def my_posts
@@ -96,6 +79,13 @@ class AdsController < ApplicationController
     return if @ad.present?
 
     redirect_to root_path, alert: 'Invalid Access'
+  end
+
+  def set_global_ad
+    @ad = Ad.find_by(id: params[:id])
+    return if @ad.present?
+
+    redirect_to root_path, alert: 'Invalid access'
   end
 
   def ad_params

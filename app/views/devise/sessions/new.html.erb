@@ -1,5 +1,5 @@
 <div style="padding: 30px; padding-left: 500px; padding-right: 500px;">
-  <div class="card text-center", style="border-radius: 10px;">
+  <div class="card text-center" style="border-radius: 10px;">
     <div class="card-header">
       <h1>Log in</h1>
     </div>
@@ -11,7 +11,7 @@
         <div class="field">
           <br />
           <%= f.label :login, 'Log In' %>
-          <%= f.text_field :login, class: 'form-control'%>
+          <%= f.text_field :login, class: 'form-control' %>
         </div>
 
         <div class="field">
@@ -27,11 +27,13 @@
         <% end %>
 
         <div class="actions">
-          <%= f.submit "Log in", class:'btn btn-primary'%>
+          <%= f.submit "Log in", class: 'btn btn-primary' %>
         </div>
       <% end %>
-    <div>
+      <div>
+      </div>
+    </div>
+
+    <%= render "devise/shared/links" %>
   </div>
 </div>
-
-<%= render "devise/shared/links" %>

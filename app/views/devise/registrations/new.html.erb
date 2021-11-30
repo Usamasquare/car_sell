@@ -1,11 +1,11 @@
 <div style="padding: 30px; padding-left: 400px; padding-right: 400px;">
-  <div class="card text-center", style="border-radius: 10px;">
+  <div class="card text-center" , style="border-radius: 10px;">
     <div class="card-header">
       <h1>Sign Up</h1>
     </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= render 'devise/shared/error_messages', resource: resource, class:"alert-link" %>
+        <%= render 'devise/shared/error_messages', resource: resource, class: "alert-link" %>
 
         <div class='field'>
           <b><%= f.label :email %></b><br />
@@ -13,19 +13,20 @@
         </div>
 
         <div class='field'>
-         <p><b><%= f.label :phone %></b>(valid 11 digit phone number)<br />
-         <%= f.text_field :phone, class: 'form-control', placeholder: '+92-3XX-XXXXXXX' %></p>
+          <p><b><%= f.label :phone %></b>(valid 11 digit phone number)<br />
+            <%= f.text_field :phone, class: 'form-control', placeholder: '+92-3XX-XXXXXXX' %></p>
         </div>
 
         <div class='field'>
-         <p><b><%= f.label :username %></b>
-         <%= f.text_field :username, class: 'form-control', placeholder: 'containing 30 characters, special characters allowed' %></p>
+          <p><b><%= f.label :username %></b>
+            <%= f.text_field :username, class: 'form-control', placeholder: 'containing 30 characters, special characters allowed' %>
+          </p>
         </div>
 
         <div class='field'>
           <b><%= f.label :password %></b>
           <% if @minimum_password_length %>
-          <em>(at least one capital letter and a special character)</em>
+            <em>(at least one capital letter and a special character)</em>
           <% end %><br />
           <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control', placeholder: 'minimum 8 characters' %>
         </div>
@@ -36,10 +37,10 @@
         </div>
 
         <div class='actions'>
-          <%= f.submit 'Sign up', class:'btn btn-primary' %>
+          <%= f.submit 'Sign up', class: 'btn btn-primary' %>
         </div>
       <% end %>
-    <%= render 'devise/shared/links' %>
+      <%= render 'devise/shared/links' %>
     </div>
   </div>
 </div>
