@@ -35,15 +35,6 @@ gem 'pagy', '~> 5.1'
 # To use Stripe, also include:
 gem 'stripe', '>= 2.8', '< 6.0'
 
-# To use Braintree + PayPal, also include:
-gem 'braintree', '>= 4.4', '< 5.0'
-
-# To use Paddle, also include:
-gem 'paddle_pay', '~> 0.1'
-
-# To use Receipts
-gem 'receipts', '~> 1.1'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
