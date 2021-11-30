@@ -1,6 +1,6 @@
 <div>
   <div class="main-body-padding-30">
-    <div class="card border-radius-10px" , style="border-radius: 10px">
+    <div class="card border-radius-10px">
       <h5 class="card-header">Explore</h5>
       <div class="card-body">
         <%= form_with(url: ads_path, method: :get) do |f| %>
@@ -106,7 +106,7 @@
             <tbody>
               <% @ads.each do |ad| %>
                 <tr>
-                  <td><%= link_to image_tag(ad.images.first, class: 'width-100', style: "width: 60%;height: 60%;"), ads_path if ad.images.any? %></td>
+                  <td><%= link_to image_tag(ad.images.first, class: 'img-size-60'), ads_path if ad.images.any? %></td>
                   <td><strong>City:</strong></td>
                   <td><%= ad.city %></td>
                   <td><strong>Price:</strong></td>

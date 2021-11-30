@@ -1,5 +1,5 @@
 class AdsController < ApplicationController
-  before_action :set_ad, only: %i[activate close edit update destroy]
+  before_action :set_ad, only: %i[toggle_status edit update destroy]
   before_action :set_global_ad, only: %i[show toggle_favorite]
 
   skip_before_action :authenticate_user!, only: [:index, :show]
@@ -26,7 +26,7 @@ class AdsController < ApplicationController
 
   def toggle_favorite
     current_user.toggle_favorite_ad(@ad)
-    redirect_to ads_path, notice: "Ad is removed from favorites"
+    redirect_to ads_path, notice: "Favorites Updated"
   end
 
   def my_favorites
@@ -53,7 +53,7 @@ class AdsController < ApplicationController
 
   def toggle_status
     @ad.toggle_status!
-    redirect_to ad_path(@ad), notice: "Ad is closed successfully"
+    redirect_to ad_path(@ad), notice: "Ad status updated successfully"
   end
 
   def my_posts
@@ -62,10 +62,7 @@ class AdsController < ApplicationController
 
   def destroy
     @ad.destroy
-    respond_to do |format|
-      format.html { redirect_to my_posts_ads_url, notice: "Ad was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to my_posts_ads_url, notice: "Ad was successfully destroyed."
   end
 
   private

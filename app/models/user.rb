@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :favorite_ads, through: :favorites, source: :ad
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, authentication_keys: [:login]
+  :recoverable, :rememberable, :validatable, authentication_keys: [:login]
 
   PK_PHONE_REGEX = /^(\+92)-{0,1}\d{3}-{0,1}\d{7}$/.freeze
 
@@ -44,6 +44,10 @@ class User < ApplicationRecord
   end
 
   def toggle_favorite_ad(ad)
-    # implement
+    if favorite_ads.find_by(id: ad.id)
+      favorite_ads.delete(ad.id)
+    else
+      favorite_ads << ad
+    end
   end
 end

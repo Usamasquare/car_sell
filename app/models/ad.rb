@@ -49,20 +49,24 @@ class Ad < ApplicationRecord
       end
     end
 
-    filtered_result = filtered_result.global_search(params[:city]) if (params[:city].present?)
-    filtered_result = filtered_result.global_search(params[:color]) if (params[:color].present?)
-    filtered_result = filtered_result.global_search(params[:mileage]) if (params[:mileage].present?)
-    filtered_result = filtered_result.global_search(params[:car_make]) if (params[:car_make].present?)
-    filtered_result = filtered_result.global_search(params[:engine_capacity]) if (params[:engine_capacity].present?)
-    filtered_result = filtered_result.global_search(params[:engine_type]) if (params[:engine_type].present?)
-    filtered_result = filtered_result.global_search(params[:assembly_type]) if (params[:assembly_type].present?)
-    filtered_result = filtered_result.global_search(params[:transmission]) if (params[:transmission].present?)
+    filtered_result = filtered_result.global_search(params[:city]) if params[:city].present?
+    filtered_result = filtered_result.global_search(params[:color]) if params[:color].present?
+    filtered_result = filtered_result.global_search(params[:mileage]) if params[:mileage].present?
+    filtered_result = filtered_result.global_search(params[:car_make]) if params[:car_make].present?
+    filtered_result = filtered_result.global_search(params[:engine_capacity]) if params[:engine_capacity].present?
+    filtered_result = filtered_result.global_search(params[:engine_type]) if params[:engine_type].present?
+    filtered_result = filtered_result.global_search(params[:assembly_type]) if params[:assembly_type].present?
+    filtered_result = filtered_result.global_search(params[:transmission]) if params[:transmission].present?
 
     filtered_result
   end
 
   def toggle_status!
-
+    if status == 'active'
+      closed!
+    else
+      active!
+    end
   end
 
   private
