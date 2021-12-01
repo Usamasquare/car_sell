@@ -1,0 +1,9 @@
+<% if flash[:alert] %>
+  <%= flash[:alert] %>
+<% end %>
+
+<% if notice.present? %>
+  <div class="alert alert-success">
+    <p class="alert-link"><%= notice %></p>
+  </div>
+<% end %>

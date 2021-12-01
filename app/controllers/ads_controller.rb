@@ -1,69 +1,85 @@
 class AdsController < ApplicationController
-  before_action :set_ad, only: %i[ show edit update destroy ]
+  before_action :set_ad, only: %i[toggle_status edit update destroy]
+  before_action :set_global_ad, only: %i[show toggle_favorite]
 
-  # GET /ads or /ads.json
+  skip_before_action :authenticate_user!, only: [:index, :show]
+
   def index
-    @ads = Ad.all
+    @ads = Ad.filter(params)
+    @pagy, @ads = pagy(@ads, items: 7)
+    @colors = Ad.pluck(:color).reject(&:blank?).uniq
+    @colors << Ad.pluck(:color_detail).reject(&:blank?).uniq
   end
 
-  # GET /ads/1 or /ads/1.json
   def show
+    @ad = Ad.find(params[:id])
   end
 
-  # GET /ads/new
   def new
     @ad = Ad.new
   end
 
-  # GET /ads/1/edit
   def edit
   end
 
-  # POST /ads or /ads.json
+  def toggle_favorite
+    current_user.toggle_favorite_ad(@ad)
+    redirect_to ads_path, notice: "Favorites Updated"
+  end
+
+  def my_favorites
+    @ads = current_user.favorite_ads
+    @pagy, @ads = pagy(@ads, items: 6)
+  end
+
   def create
-    @ad = Ad.new(ad_params)
-
-    respond_to do |format|
-      if @ad.save
-        format.html { redirect_to @ad, notice: "Ad was successfully created." }
-        format.json { render :show, status: :created, location: @ad }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
-      end
+    @ad = current_user.ads.new(ad_params)
+    if @ad.save
+      redirect_to post_ad_steps_path(ad_id: @ad.id)
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /ads/1 or /ads/1.json
   def update
-    respond_to do |format|
-      if @ad.update(ad_params)
-        format.html { redirect_to @ad, notice: "Ad was successfully updated." }
-        format.json { render :show, status: :ok, location: @ad }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ad.errors, status: :unprocessable_entity }
-      end
+    if @ad.update(ad_params)
+      redirect_to post_ad_steps_path(ad_id: @ad.id), notice: "Ad was successfully updated."
+    else
+      render :edit
     end
   end
 
-  # DELETE /ads/1 or /ads/1.json
+  def toggle_status
+    @ad.toggle_status!
+    redirect_to ad_path(@ad), notice: "Ad status updated successfully"
+  end
+
+  def my_posts
+    @pagy, @my_ads = pagy(current_user.ads, items: 3)
+  end
+
   def destroy
     @ad.destroy
-    respond_to do |format|
-      format.html { redirect_to ads_url, notice: "Ad was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to my_posts_ads_url, notice: "Ad was successfully destroyed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ad
-      @ad = Ad.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def ad_params
-      params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :assembly_type, :description)
-    end
+  def set_ad
+    @ad = current_user.ads.find_by(id: params[:id])
+    return if @ad.present?
+
+    redirect_to root_path, alert: 'Invalid Access'
+  end
+
+  def set_global_ad
+    @ad = Ad.find_by(id: params[:id])
+    return if @ad.present?
+
+    redirect_to root_path, alert: 'Invalid access'
+  end
+
+  def ad_params
+    params.require(:ad).permit(:city, :mileage, :car_make, :price, :engine_type, :transmission, :engine_capacity, :color, :color_detail, :assembly_type, :description, images: [])
+  end
 end

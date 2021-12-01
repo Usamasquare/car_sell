@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>My Ads</h1>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>City</th>
+        <th>Mileage</th>
+        <th>Car make</th>
+        <th>Price</th>
+        <th>Engine type</th>
+        <th>Transmission</th>
+        <th>Engine capacity</th>
+        <th>Color</th>
+        <th>Assembly type</th>
+        <th>Description</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @my_ads.each do |ad| %>
+      <tr>
+        <td>
+          <div class='width-100'>
+            <% if ad.images.any? %>
+            <%= link_to image_tag(ad.images.first, class: 'width-100'), ads_path %>
+            <% end %>
+          </div>
+        </td>
+        <td><%= ad.city %></td>
+        <td><%= ad.mileage %></td>
+        <td><%= ad.car_make %></td>
+        <td><%= ad.price %></td>
+        <td><%= ad.engine_type %></td>
+        <td><%= ad.transmission %></td>
+        <td><%= ad.engine_capacity %></td>
+        <td><%= ad.color %></td>
+        <td><%= ad.assembly_type %></td>
+        <td><%= ad.description %></td>
+        <td><%= link_to 'Show', ad, class: "btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_ad_path(ad), class: "btn btn-light" %></td>
+        <td><%= link_to  toggle_status_ad_text(ad), toggle_status_ad_path(ad), class: "btn btn-primary" %></td>
+        <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-warning" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div>
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>

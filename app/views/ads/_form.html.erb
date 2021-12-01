@@ -11,57 +11,69 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
+  <div class="row g-3">
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :city %>
+        <%= form.select :city, Ad::CITIES, { prompt: "--Select--" }, class: "form-control", required: true %>
+      </div>
 
-  <div class="field">
-    <%= form.label :mileage %>
-    <%= form.number_field :mileage %>
-  </div>
+      <div class="field">
+        <%= form.label :color, class: "form-label" %>
+        <%= form.select :color, Ad::COLOR, { prompt: "--Select--" }, class: "form-control color_field ad_color", required: true %>
+        <%= form.text_field :color_detail, class: "form-control mt-2 color_detail d-none", placeholder: "Enter other color name" %>
 
-  <div class="field">
-    <%= form.label :car_make %>
-    <%= form.text_field :car_make %>
-  </div>
-
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.text_field :price %>
-  </div>
-
-  <div class="field">
-    <%= form.label :engine_type %>
-    <%= form.text_field :engine_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :transmission %>
-    <%= form.text_field :transmission %>
-  </div>
-
-  <div class="field">
-    <%= form.label :engine_capacity %>
-    <%= form.number_field :engine_capacity %>
-  </div>
-
-  <div class="field">
-    <%= form.label :color %>
-    <%= form.text_field :color %>
-  </div>
-
-  <div class="field">
-    <%= form.label :assembly_type %>
-    <%= form.text_field :assembly_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :car_make %>
+        <%= form.select :car_make, Ad::MAKE, { prompt: "--Select--" }, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :price, 'Price(Amount must be in lacs)' %>
+        <%= form.text_field :price, class: "form-control", prompt: "Amount must be in lacs", required: true %>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="field">
+        <%= form.label :engine_type %>
+        <%= form.select :engine_type, Ad::ENGINE, { prompt: "--Select--" }, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="field">
+        <%= form.label :transmission %>
+        <%= form.select :transmission, Ad::TRANSMISSION, { prompt: "--Select--" }, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :engine_capacity %>
+        <%= form.number_field :engine_capacity, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :mileage, 'Mileage (must be in Kilometers)' %>
+        <%= form.number_field :mileage, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="field">
+        <%= form.label :assembly_type %>
+        <%= form.select :assembly_type, Ad::ASSEMBLY, { prompt: "--Select--" }, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.rich_text_area :description, required: true %>
+    </div>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Next', class: "btn btn-warning" %>
   </div>
 <% end %>

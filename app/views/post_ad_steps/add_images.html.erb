@@ -1,0 +1,41 @@
+<h1>Add Images</h1>
+<%= form_for @ad, url: wizard_path do |form| %>
+  <% if @ad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ad.errors.count, "error") %> prohibited this ad from being saved:</h2>
+      <ul>
+        <% @ad.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= hidden_field_tag :ad_id, @ad.id %>
+    <%= form.label :images, class: "form-label" %>
+    <%= form.file_field :images, multiple: true, class: "form-control" %>
+  </div>
+
+  <div class='width-400 row g-10'>
+    <strong>IMAGE:</strong>
+    <% @ad.images.each do |i| %>
+      <div class="col-6">
+        <%= image_tag(i, class: 'width-100') %>
+        <%= link_to 'X', post_ad_step_path(ad: @ad, img: i), method: :delete, class: 'btn btn-danger' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <div class="actions">
+        <%= form.submit 'Continue', class: 'btn btn-primary' %>
+      </div>
+    </div>
+    <div class="col-1">
+      <div class="actions">
+        <%= link_to 'SKIP', next_wizard_path(ad: @ad), class: 'btn btn-outline-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>

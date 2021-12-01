@@ -1,45 +1,131 @@
-<p id="notice"><%= notice %></p>
+<div>
+  <div class="main-body-padding-30">
+    <div class="card border-radius-10px">
+      <h5 class="card-header">Explore</h5>
+      <div class="card-body">
+        <%= form_with(url: ads_path, method: :get) do |f| %>
+          <div class="row g-3">
+            <div class="col">
+              <div class="field ">
+                <%= f.label :city %>
+                <%= f.select :city, Ad::CITIES, { prompt: "--Select--" }, class: "form-control" %>
+              </div>
+            </div>
 
-<h1>Ads</h1>
+            <div class="col">
+              <div class="field">
+                <%= f.label :car_make %>
+                <%= f.select :car_make, Ad::MAKE, { prompt: "--Select--" }, class: "form-control", include_blank: true %>
+              </div>
+            </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>City</th>
-      <th>Mileage</th>
-      <th>Car make</th>
-      <th>Price</th>
-      <th>Engine type</th>
-      <th>Transmission</th>
-      <th>Engine capacity</th>
-      <th>Color</th>
-      <th>Assembly type</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+            <div class="col">
+              <div class="field">
+                <%= f.label :price %>
+                <%= f.select :price_filter, [['Upto 5 lacs', 5], ['Upto 10 lacs', 10], ['Upto 20 lacs', 20], ['Upto 50 lacs', 50], ['Above 50 lacs', 51]], { prompt: "--Select--" }, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
 
-  <tbody>
-    <% @ads.each do |ad| %>
-      <tr>
-        <td><%= ad.city %></td>
-        <td><%= ad.mileage %></td>
-        <td><%= ad.car_make %></td>
-        <td><%= ad.price %></td>
-        <td><%= ad.engine_type %></td>
-        <td><%= ad.transmission %></td>
-        <td><%= ad.engine_capacity %></td>
-        <td><%= ad.color %></td>
-        <td><%= ad.assembly_type %></td>
-        <td><%= ad.description %></td>
-        <td><%= link_to 'Show', ad %></td>
-        <td><%= link_to 'Edit', edit_ad_path(ad) %></td>
-        <td><%= link_to 'Destroy', ad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <div class="toggle-search d-none">
+            <div class="row g-3">
+              <div class="col">
+                <div class="field">
+                  <%= f.label :mileage %>
+                  <%= f.number_field :mileage, class: "form-control", include_blank: true %>
+                </div>
+              </div>
 
-<br>
+              <div class="col">
+                <div class="field">
+                  <%= f.label :color %>
+                  <%= f.select :color, @colors, { prompt: "--Select--" }, class: "form-control", include_blank: true %>
+                </div>
+              </div>
 
-<%= link_to 'New Ad', new_ad_path %>
+              <div class="col">
+                <div class="field">
+                  <%= f.label :engine_type %>
+                  <%= f.select :engine_type, Ad::ENGINE, { prompt: "--Select--" }, class: "form-control", include_blank: true %>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row g-3">
+              <div class="col">
+                <div class="field">
+                  <%= f.label :assembly_type %>
+                  <%= f.select :assembly_type, Ad::ASSEMBLY, { prompt: "--Select--" }, class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="field">
+                  <%= f.label :transmission %>
+                  <%= f.select :transmission, Ad::TRANSMISSION, { prompt: "--Select--" }, class: "form-control" %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="field">
+                  <%= f.label :engine_capacity %>
+                  <%= f.number_field :engine_capacity, class: "form-control", include_blank: true %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col">
+              <div class="show btn btn-outline-primary">Advanced Options</div>
+            </div>
+
+            <div class="col">
+              <div><%= f.submit "Search", name: nil, class: "btn btn-outline-primary" %></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="main-body-padding-30">
+    <div class="card text-center border-radius-10px">
+      <div class="card-header">
+        <h1>Ads</h1>
+      </div>
+      <div class="card-body">
+        <div>
+          <table class="table table-hover table-borderless">
+            <thead>
+              <tr>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @ads.each do |ad| %>
+                <tr>
+                  <td><%= link_to image_tag(ad.images.first, class: 'img-size-60'), ads_path if ad.images.any? %></td>
+                  <td><strong>City:</strong></td>
+                  <td><%= ad.city %></td>
+                  <td><strong>Price:</strong></td>
+                  <td><%= ad.price %> lacs</td>
+                  <td><strong>Description:</strong></td>
+                  <td><%= ad.description %></td>
+                  <td><%= link_to toggle_favorite_ad_text(ad), toggle_favorite_ad_path(ad), class: "btn btn-danger" if user_signed_in? %></td>
+                  <td><%= link_to 'Show', ad, class: "btn btn-info" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <div>
+          <%== pagy_bootstrap_nav(@pagy) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
