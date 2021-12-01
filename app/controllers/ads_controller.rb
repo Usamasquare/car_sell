@@ -4,8 +4,6 @@ class AdsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:index, :show]
 
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-
   def index
     @ads = Ad.filter(params)
     @pagy, @ads = pagy(@ads, items: 7)
@@ -66,10 +64,6 @@ class AdsController < ApplicationController
   end
 
   private
-
-  def record_not_found
-    render plain: "404 Not Found", status: 404
-  end
 
   def set_ad
     @ad = current_user.ads.find_by(id: params[:id])
